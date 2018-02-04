@@ -1,0 +1,58 @@
+
+/// @name Debug logger
+/// @param {String} $message - The message to display
+/// @param {String | List} - if sting value must be all, if list must contain 3 keys ➤ main dir ➤ sub-dir ➤ module
+/// @param {String} - can be true, false, or detailed
+/// @outputs Debug messege in the cli dependant on level
+///
+
+@mixin DEBUG($message, $location: all, $type: true) {
+  $get-location-value: ();
+
+  @if $type == true and $location == all {
+    @include log('DEBUG', $message);
+  } @else {
+    @if $location != all and _is-list($location) {
+      @if length($location) == 3 {
+        $get-location-value: get('debug, #{nth($location, 1)}, #{nth($location, 2)}, #{nth($location, 3)}');
+      } @else {
+        @include ERROR('Debug location needs 3 keys written in a list ➤ main dir ➤ sub-dir ➤ module');
+      }
+    }
+    $get-type: $get-location-value;
+
+    @if $get-type == $type and $type == true {
+      @include log('DEBUG', $message);
+    } @else if $get-type == $type and $type == detailed {
+      @include log('DEBUG', $message);
+    }
+  }
+}
+
+
+@mixin run-debug-start($list, $item-name, $item-map: null, $package: 'Framework', $stylesheet-name: $stylesheet-name) {
+  // $output-message: ();
+  
+  @include DEBUG('✚ #{'❙'$package'❙'} #{$item-name} Compiling ➤ #{$stylesheet-name}', $list, true);
+  
+  // Detailed is currently broken
+  // Currently investigating issue 
+  //
+  // @if _is-map($item-map) == true {
+  //   $output-message: map-debug($item-map);
+  // } @else {
+  //   @if $item-map == null or $item-map  == () {
+  //     $output-message: 'This modules does not require any settings';
+  //   }
+  // }
+  // @include DEBUG('✚ #{'❙'$package'❙'} #{$item-name} ➤ #{$stylesheet-name}'
+  // + '\a Settings Passed: \a'
+  // + '#{$output-message}',
+  //   $list, detailed);
+}
+
+@mixin run-debug-end($list, $item-name, $package: 'Framework', $stylesheet-name: $stylesheet-name) {
+  @each $level in get('global, debug') {
+    @include DEBUG('✔ #{'❙'$package'❙'} #{$item-name} Successfully Compiled ➤ #{$stylesheet-name}', $list, $level);
+  }
+}

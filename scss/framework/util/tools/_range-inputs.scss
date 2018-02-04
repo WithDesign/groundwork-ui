@@ -1,0 +1,114 @@
+// sass-lint:disable no-qualifying-elements force-element-nesting force-pseudo-nesting force-attribute-nesting no-color-literals
+@include run-debug-start((framework, util, tools), '✎ Tool: Range Slider Creator');
+////
+/// Ranger Slider
+/// @group tools
+////
+
+/// @name Range Slider Inputs
+/// Easily create range inputs
+/// @param {value} $width
+/// @param {value} $input-top
+/// @param {value} $input-bg-color
+/// @param {value} $input-thumb-color
+/// @param {property} $float [none]
+/// @param {value} $input-height [20px]
+/// @param {value} $input-border [4px]
+/// @outputs Styles to create a range slider in css
+/// @example
+///    .range-slider {
+///       @include range-slider(100%, 0, color(greyscale, grey), color(brand, primary), none, 15px);
+///     }
+
+
+@mixin range-slider($width, $input-top, $input-bg-color, $input-thumb-color, $float: none, $input-height: 20px, $input-border: 4px) {
+  position: relative;
+  float: $float;
+  height: ($input-height + ($input-border * 2));
+  text-align: center;
+
+  @include calc(width, $width, '#{$width} - #{($input-border * 2)}');
+
+  input[type='range'] {
+    position: absolute;
+    top: $input-top;
+    left: 0;
+    overflow: hidden;
+    width: $width;
+    height: $input-height;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    border: $input-border solid $input-bg-color;
+    border-radius: 0;
+    outline: none;
+    background: $input-bg-color;
+
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    position: relative;
+    z-index: 1;
+    width: $input-height;
+    height: $input-height;
+    cursor: pointer;
+    pointer-events: all;
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+    background-color: $input-thumb-color;
+
+    -webkit-appearance: none;
+  }
+
+  input[type='range']::-moz-range-thumb {
+    position: relative;
+    z-index: 10;
+    width: $input-height;
+    height: $input-height;
+    cursor: pointer;
+    pointer-events: all;
+    border: 0;
+
+    -moz-appearance: none;
+  }
+
+  input[type='range']::-ms-thumb {
+    position: relative;
+    z-index: 10;
+    width: $input-height;
+    height: $input-height;
+    cursor: pointer;
+    pointer-events: all;
+    border: 0;
+    border-radius: 0;
+    background-color: $input-thumb-color;
+
+    -ms-appearance: none;
+  }
+
+  input[type='range']::-moz-range-track {
+    position: relative;
+    z-index: -1;
+    border: 0;
+    border-radius: 0;
+    background-color: color(greyscale, black); // sass-lint:disable-line no-color-keywords
+  }
+
+  input[type='range']:last-of-type::-moz-range-track {
+    border: 0;
+    border-radius: 0;
+    background: none transparent;
+
+    -moz-appearance: none;
+  }
+
+  input[type='range']::-moz-focus-outer {
+    border: 0;
+    border-radius: 0;
+  }
+}
+
+@include run-debug-end((framework, util, tools), '✎ Tool: Range Slider Creator');

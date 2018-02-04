@@ -1,0 +1,216 @@
+////
+/// Fluid Text
+/// @group tools
+////
+
+@include run-debug-start((framework, util, tools), '✎ Tool: Fluid Text Creator');
+
+// Built mobile first
+// Modular Scale ranges
+
+/// @name Modular scale range small values
+/// @access private
+/// @type Variable
+$mod-1: 1.125 !default;
+
+/// @name Modular scale range larger values
+/// @access private
+/// @type Variable
+$mod-2: 1.333 !default;
+
+// Creates the basic map to create a custom modular scale
+$preset-fluid-fonts: (
+  1: (
+    base: get('typography, heading, h1, font-size'),
+    level: get('typography, heading, h1, level')
+  ),
+  2: (
+    base: get('typography, heading, h2, font-size'),
+    level: get('typography, heading, h2, level')
+  ),
+  3: (
+    base: get('typography, heading, h3, font-size'),
+    level: get('typography, heading, h3 , level')
+  ),
+  4: (
+    base: get('typography, heading, h4, font-size'),
+    level: get('typography, heading, h4, level')
+  ),
+  5: (
+    base: get('typography, heading, h5, font-size'),
+    level: get('typography, heading, h5, level')
+  ),
+  6: (
+    base: get('typography, heading, h6, font-size'),
+    level: get('typography, heading, h6, level')
+  ),
+  default: (
+    base: get('typography, heading, default, font-size'),
+    level: get('typography, heading, default, level')
+  ),
+  auto: (
+    base: get('typography, heading, p, font-size'),
+    level: get('typography, heading, p, level')
+  )
+);
+
+@function generate-font-sizes($key) {
+  $value-min: ();
+  $value-max: ();
+
+  @if $key == auto {
+    $value-min: $mod-1 * calculateEm($default-font-size);
+    $value-max: $mod-2 * calculateEm($default-font-size);
+  } @else if $key >= 0 {
+    $value-min: pow($mod-1, $key) * calculateEm($default-font-size);
+    $value-max: pow($mod-2, $key) * calculateEm($default-font-size);
+  } @else {
+    $value-min: ($key * -1)/$mod-1 * calculateEm($default-font-size);
+    $value-max: ($key * -1)/$mod-2 * calculateEm($default-font-size);
+  }
+
+  $map: (
+    min: $value-min,
+    max: $value-max,
+  );
+  @return $map;
+}
+
+/// @name Set set-steps
+/// Creates the steps in regards to breapoints and size
+/// @param $map - A list
+/// @returns {map} A map containin each step created within the list -> A step contains a min and max for font siez and alos screen width
+
+@function set-steps($map) {
+  $query: convert-to-map($map);
+  $return-value: ();
+  $length-value: length($query);
+  $count: 1;
+  @while $count <= $length-value - 1 {
+    $start: nth($query, $count);
+    $stop: nth($query, $count + 1);
+    $map: (
+      step + $count: (
+        width: (
+          min: nth($start, 1),
+          max: nth($stop, 1),
+        ),
+        size: (
+          min: nth($start, 2),
+          max: nth($stop, 2),
+        ),
+      ),
+    );
+    $return-value: map-merge($return-value, $map);
+    $count: $count + 1;
+  }
+  @return $return-value;
+}
+
+/// @name Convert Screen Size
+/// @param $screen-size - A value or string that contains a query of pixels
+/// @param $only-pixel - Set to true or false if you would like the query to be converted to over to a breakpoint query
+/// @returns {Value} A pixel value or a breakpoint query
+
+@function screen-size($screen-size, $only-pixel: true) {
+  $return-value: ();
+  //Checks to see if a breakpoint query was used if it was it converts the value over to pixels
+  @if map-has-key($queries, $screen-size) {
+    $screen-size: map-get($breakpoints, $screen-size);
+  }
+
+  // Checks to see if you want a breakpoint query or just the pixel value retured
+  @if $only-pixel == false {
+    $return-value: $screen-size;
+  } @else {
+    // Adds min-width to the pixel value
+    $return-value: min-width $screen-size;
+  }
+  @return $return-value;
+}
+
+/// @name Fluid Text Mixin
+/// @param {value} $base-size - A base value for mobile also sets the base line-height, set in pixiels
+/// @param {list} $query - A list of what breakpoint and size to use for enabling fluid, written like (sm 40px, lg 80px)
+/// @param {list} $coverage - A list of possible export properties -- all, font-size, line-heigh, margin -> Default: all
+/// @outputs A pixel value or a breakpoint query
+/// @see $preset-fluid-fonts
+/// @see $mod-1
+/// @see  $mod-2
+
+@mixin fluid-text($preset, $base-size: null, $query: null, $coverage: all, $important: null) {
+
+  @if map-has-key($preset-fluid-fonts, $preset) {
+    $prop: map-get($preset-fluid-fonts, $preset);
+    $base-size: nth(nth($prop, 1), 2);
+    $level: nth(nth($prop, 2), 2);
+    $font-sizes: generate-font-sizes($level);
+    $min: calculatePx(strip-unit(nth(nth($font-sizes, 1), 2)));
+    $max: calculatePx(strip-unit(nth(nth($font-sizes, 2), 2)));
+    $query: (sm $min, xl $max);
+    // Add c to preset to set a custom preset
+  } @else if $preset != c and map-has-key($preset-fluid-fonts, $preset) == false {
+    @warn '`#{$preset}` is not a set preset in fluid text';
+  }
+
+  // Checks to see if coverage is set to all or has font-size
+  @if $coverage == all or index($coverage, font-size) {
+
+    // Sets mobile fotn size as the base
+    font-size: calculateEm($base-size);
+    // Creates the steps from the query
+    $steps: set-steps($query);
+    $count: 1;
+    $length-of-query: length($query);
+    // $query-map: convert-to-map($query);
+
+    @for $i from 1 through $length-of-query - 1 {
+      // Gets the step
+      $step: map-deep-get($steps, step + $i);
+
+      // Get the maps that make up the size amd width, and assign
+      $width: map-deep-get($step, width);
+      $size: map-deep-get($step, size);
+
+      // Sets up width variables
+      $min: nth(nth($width, 1), 2);
+      $max: nth(nth($width, 2), 2);;
+      $min-vw: screen-size($min, false);
+      $max-vw: screen-size($max, false);
+
+      // Sets up sizes for the start and stops
+      $min-value: calculateEm(nth(nth($size, 1), 2));
+      $max-value: calculateEm(nth(nth($size, 2), 2));
+
+      @if $length-of-query == $i + 1 {
+
+        @include breakpoint(screen-size($min, false)) {
+          @include calc(font-size, calculateEm($base-size), #{$min-value} + #{strip-unit($max-value - $min-value)} * unquote('(100vw - #{calculateEm($min-vw)})') / #{strip-unit(calculateEm($max-vw - $min-vw))}, $important);
+        }
+
+        @include breakpoint(screen-size($max, true)) {
+          font-size: $max-value;
+        }
+      } @else {
+        @include breakpoint(screen-size($min, false)) {
+          @include calc(font-size, calculateEm($base-size), #{$min-value} + #{strip-unit($max-value - $min-value)} * unquote('(100vw - #{calculateEm($min-vw)})') / #{strip-unit(calculateEm($max-vw - $min-vw))}, $important);
+        }
+      }
+    }
+  }
+
+  // Checks to see if coverage is set to all or has line-height within
+  @if $coverage == all or index($coverage, line-height) {
+    line-height: calculateEm($base-size + ($base-size * 0.125)) $important;
+  }
+
+  // Checks to see if coverage is set to all or has margin within
+  @if $coverage == all or index($coverage, margin) {
+    $baseline: calculateEm($baseline);
+    $base-size: calculateEm($base-size);
+    @include calc(margin-top, $baseline, ((#{$baseline} - #{$base-size}) * 1) + #{$baseline}, $important);
+    @include calc(margin-bottom, $baseline, ((#{$baseline} - #{$base-size}) * 1) + #{$baseline}, $important);
+  }
+}
+
+@include run-debug-end((framework, util, tools), '✎ Tool: Fluid Text Creator');

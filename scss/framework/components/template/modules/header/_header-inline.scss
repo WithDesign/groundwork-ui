@@ -1,0 +1,203 @@
+// sass-lint:disable no-qualifying-elements force-element-nesting force-pseudo-nesting
+
+// Inline Nav Links
+// ==========================================================================
+
+@if template-active(header, inline-header) == true {
+  header.inline-head {
+    position: relative;
+    z-index: 1000;
+
+    .nav-wrapper {
+      width: 100%;
+      background-color: color(greyscale, light-grey);
+
+      @include shadow(2);
+
+      .text {
+        display: none;
+      }
+    }
+
+    .nav-style {
+      @extend .no-padding;
+      @extend .container;
+    }
+
+    .header-extra {
+      display: none;
+    }
+
+    #logo {
+      position: relative;
+      z-index: 10;
+      display: block;
+      float: left;
+      margin: 15px;
+      background:  {
+        image: url('');
+        repeat: no-repeat;
+      }
+
+      @include breakpoint(sm) {
+        position: inherit;
+      }
+    }
+
+    .navbar {
+      margin: 0;
+      padding: 0;
+
+      .menu {
+        position: absolute;
+        top: -1000px;
+        float: right;
+        width: 100%;
+        margin: 0;
+        margin-top: 35px;
+        padding: 0;
+        list-style: none;
+        background-color: color(greyscale, white);
+
+        @include transition-timing-function(cubic-bezier(0, 1, 0.5, 1));
+        @include transition-delay(0.5s);
+        @include transition-property(all);
+        @include breakpoint(sm) {
+          position: relative;
+          top: 0;
+          width: auto;
+          background: transparent;
+
+          @include box-shadow(none);
+        }
+        @include shadow(2);
+
+        li {
+          display: block;
+          float: none;
+          margin: 15px 0;
+
+          @include breakpoint(sm) {
+            display: inline-block;
+            float: left;
+            margin: 15px;
+          }
+        }
+      }
+
+      // Link Styles
+      a,
+      span {
+        margin: 5px;
+        padding: 15px 10px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        letter-spacing: 5px;
+        color: color(greyscale, black);
+        font-family: $font-heading;
+
+        @include font-size(21px);
+
+        &:hover {
+          color: color(brand, secondary);
+          background-color: color(greyscale, white);
+
+          @include breakpoint(sm) {
+            background-color: transparent;
+          }
+        }
+      }
+
+      // Handles position of nav display on mobile
+      #drop:checked +ul {
+        top: 115px;
+      }
+    }
+
+    // Styles/Animates Toggle
+    #drop {
+      display: none;
+    }
+
+    .nav-toggle {
+      position: relative;
+      z-index: 10;
+      display: block;
+      float: right;
+      width: 35px;
+      height: 35px;
+      margin: 15px;
+      padding: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      color: color(greyscale, white);
+      border: 0 {
+        radius: 5px;
+      }
+      background-color: color(brand, primary);
+
+      @include breakpoint(sm) {
+        display: none;
+      }
+      @include font-size(17px);
+
+      &:hover {
+        background-color: darken(color(brand, primary), 15%);
+      }
+
+      .pill {
+        top: 50%;
+
+        @include transform(translateY(-50%));
+      }
+
+      .pill,
+      .pill:before,
+      .pill:after {
+        position: absolute;
+        display: block;
+        width: 35px;
+        height: 5px;
+        margin: 0;
+        padding: 0;
+        content: '';
+        cursor: pointer;
+        border-radius: 1px;
+        background: color(greyscale, white);
+
+        @include transition(all 500ms ease-in-out);
+
+        &:hover {
+          background: color(greyscale, white) !important;
+        }
+      }
+
+      .pill:before {
+        top: -10px;
+      }
+
+      .pill:after {
+        bottom: -10px;
+      }
+    }
+
+    .nav-toggle.active {
+      .pill {
+        background-color: transparent;
+
+        &:before {
+          top: 0;
+
+          @include transform(rotate(45deg));
+        }
+
+        &:after {
+          top: 0;
+
+          @include transform(rotate(-45deg));
+        }
+      }
+    }
+  }
+}

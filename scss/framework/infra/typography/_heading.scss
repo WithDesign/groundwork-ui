@@ -1,0 +1,76 @@
+
+// Default Heading Styles
+// ==========================================================================
+@include run-debug-start((framework, infra, typography), ■ Headings, get('typography, heading'));
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  clear: both;
+  font:  {
+    family: font-family(heading);
+  }
+}
+
+$heading: get('typography, heading');
+$heading-keys: map-keys($heading);
+
+// Loops through checking what type of heading you would like within your stylesheet -> using fluid-font or using static text headings
+
+@each $key in $heading-keys {
+  $map: map-get($heading, $key);
+  $level: nth(nth($map, 1), 2);
+  $size-fallback: nth(nth($map, 2), 2);
+  $line-fallback: nth(nth($map, 3), 2);
+  $weight: nth(nth($map, 4), 2);
+  $transform: nth(nth($map, 5), 2);
+  // Checks to see if fluid font is active
+  @if get('typography, fluid-font-active') == true {
+    @if $key == default {
+      $key: body;
+
+      #{$key},
+      .#{$key} {
+        margin: 0 !important;
+        font-size: 100%;
+        font-weight: $weight;
+
+        @include fluid-text($level, null, null, font-size line-height);
+        @if $transform != none {
+          text-transform: $transform;
+        }
+      }
+    } @else {
+      #{$key},
+      .#{$key} {
+        font-weight: $weight;
+
+        @include fluid-text($level);
+        @if $transform != none {
+          text-transform: $transform;
+        }
+      }
+    }
+    // Generate Static Font Sizes
+  } @else {
+    @if $key != default {
+      #{$key},
+      .#{$key} {
+        font-weight: $weight;
+        @include font-size($size-fallback);
+        line-height: $line-fallback;
+        @if $transform != none {
+          text-transform: $transform;
+        }
+        @if $key == p {
+          margin-bottom: 1.5em;
+        }
+      }
+    }
+  }
+}
+
+@include run-debug-end((framework, infra, typography), ■ Headings);

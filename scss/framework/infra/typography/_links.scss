@@ -1,0 +1,22 @@
+
+// Default Link Styles
+// ==========================================================================
+@include run-debug-start((framework, infra, typography), ■ Links, get('typography, link'));
+
+a {
+  display: inline-block;
+  text-decoration: get('typography, link, text-decoration');
+  text-transform: get('typography, link, text-transform');
+  color: color(link, link);
+
+  @include transition(0.3s ease all);
+
+  &:focus,
+  &:active,
+  &:hover {
+    color: darken(color(link, link), 20%);
+    outline: 0;
+  }
+}
+
+@include run-debug-end((framework, infra, typography), ■ Links);

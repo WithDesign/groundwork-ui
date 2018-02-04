@@ -1,0 +1,58 @@
+
+// Base Footer Styles
+// ==========================================================================
+@if template-active(footer, footer-default) == true {
+  footer {
+    position: relative;
+    z-index: 100;
+    padding-top: 30px;
+    text-align: center;
+    color: color(greyscale, white);
+    background-color: color(greyscale, dark-grey);
+
+    @include breakpoint(sm) {
+      text-align: left;
+    }
+
+    .foot-info {
+      padding-bottom: 15px;
+    }
+
+    @if $citations == true {
+      .citations {
+        margin-top: 20px;
+        text-align: center;
+
+        p {
+          width: 80%;
+          margin: 0 auto;
+
+          @include font-size(14px);
+        }
+
+        b {
+          display: block;
+          margin-bottom: 5px;
+        }
+
+        a {
+          display: inline-block;
+        }
+      }
+    } @else {
+      .citations {
+        display: none !important;
+      }
+    }
+
+    .credits {
+      padding-bottom: 15px;
+      text-align: center;
+      color: color(greyscale, light-grey);
+
+      p {
+        @include font-size(12px);
+      }
+    }
+  }
+}

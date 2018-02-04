@@ -1,0 +1,165 @@
+// sass-lint:disable function-name-format, variable-name-format
+
+@include run-debug-start((framework, util, tools), '✎ Tool: Animation Helpers');
+
+////
+/// Animation Tools
+/// @group tools
+////
+
+// Transition Mixins
+// ==========================================================================
+
+/// @name Transition Prefix
+/// @param {property} $transition - A string of properties
+/// @outputs Transition properties
+
+@mixin transition($transition...) {
+  @include prefix(transition, $transition);
+}
+
+/// @name Transition Property Prefix
+/// @param {property} $property - A string of properties
+/// @outputs Transition-property properties
+
+@mixin transition-property($property...) {
+  @include prefix(transition-property, $property);
+}
+
+/// @name Transition Duration Prefix
+/// @param {property} $duration - A string of properties
+/// @outputs Transition-duration properties
+
+@mixin transition-duration($duration...) {
+  @include prefix(transition-duration, $duration);
+}
+
+/// @name Transition Timing Function Prefix
+/// @param {property} $timing - A string of properties
+/// @outputs Transition-timing-function properties
+
+@mixin transition-timing-function($timing...) {
+  @include prefix(transition-timing-function, $timing);
+}
+
+/// @name Transition Delay Prefix
+/// @param {property} $delay - A string of properties
+/// @outputs Transition-delay properties
+
+@mixin transition-delay($delay...) {
+  @include prefix(transition-delay, $delay);
+}
+
+// Transform Mixins
+// ==========================================================================
+
+/// @name Transform Prefix
+/// @param {property} $transform - A string of properties
+/// @outputs Transform properties
+
+@mixin transform($transform...) {
+  @include prefix(transform, $transform);
+}
+
+/// @name Transform Origin Prefix
+/// @param {property} $transform-origin - A string of properties
+/// @outputs Transform-origin properties
+
+@mixin transform-origin($origin...) {
+  @include prefix(transform-origin, $origin);
+}
+
+/// @name Transform Style Prefix
+/// @param {property} $transform-origin - A string of properties
+/// @outputs Transform-style properties
+
+@mixin transform-style($transform-style: flat) {
+  @include prefix(transform-style, $transform-style);
+}
+
+// Keyframes
+// ==========================================================================
+
+/// @name Keyframes Prefix
+/// @param {property} $animation-name - A key
+/// @content [keyframe properties and setp]
+/// @outputs Keyframes prefixed
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @-ms-keyframes #{$animation-name} {
+    @content;
+  }
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+// Animation
+// ==========================================================================
+
+/// @name Animation Prefix
+/// @param {property} $str - A string of properties
+/// @outputs Animation prefixed
+
+@mixin animation($str) {
+  @include prefix(animation, $str);
+}
+
+/// @name Animation Count Prefix
+/// @param {property} $count - A string of properties
+/// @outputs Animation count prefixed
+
+@mixin animation-count($count: 1) {
+  @include prefix(animation-iteration-count, $count);
+}
+
+/// @name Animation Delay Prefix
+/// @param {property} $delay - A string of properties
+/// @outputs Animation Delay prefixed
+
+@mixin animation-delay($delay: 0.2s) {
+  @include prefix(animation-delay, $delay);
+}
+
+/// @name Animation Duration Prefix
+/// @param {property} $duration - A string of properties
+/// @outputs Animation Delay prefixed
+
+@mixin animation-duration($duration: 1s) {
+  @include prefix(animation-duration, $duration);
+}
+
+/// @name Animation Fill Mode Prefix
+/// @param {property} $fill - A string of properties
+/// @outputs Animation Delay prefixed
+
+@mixin animation-fill-mode($fill: both) {
+  @include prefix(animation-fill-mode, $fill);
+}
+
+/// @name Animation Name Prefix
+/// @param {property} $name - A string of properties
+/// @outputs Animation Delay prefixed
+
+@mixin animation-name($name) {
+  @include prefix(animation-name, $name);
+}
+
+/// @name Animation Timing Function Prefix
+/// @param {property} $function - A string of properties
+/// @outputs Animation Delay prefixed
+
+@mixin animation-function($function: ease) {
+  @include prefix(animation-timing-function, $function);
+}
+
+@include run-debug-end((framework, util, tools), '✎ Tool: Animation Helpers');

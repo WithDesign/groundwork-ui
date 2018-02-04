@@ -1,0 +1,84 @@
+////
+/// Debugger
+/// @group Debugger
+////
+
+/// Map/List Debugger
+///
+/// @param $list [List] - list
+/// @param {Boolean} $pre [false] - enable/disable variables type and proper indentation
+/// @param {Intiger} $level [1] - internal variable for recursivity
+/// @return {Map} scss a better debugged map
+/// @example debug(a b c d e)   => [ a, b, c, d, e ]
+/// @example debug(a b (c d e)) => [ a, b, [ c, d, e ] ]
+
+@function map-debug($list, $pre: false, $level: 1) {
+  $tab: '    ';
+  $indent: '';
+  $break: if($pre, '\A ', '');
+  $result: '[' + $break;
+  $result: $result + $break + if($pre, if($level > 1, $indent, ''), ' ') + ']';
+
+  @if length($list) == 0 {
+    @return '( )';
+  }
+
+  @if length($list) == 1 {
+    @return if($pre,  '(' + type-of($list) + ') ', '') + $list;
+  }
+
+  @for $i from 1 to $level {
+    $indent: $indent + $tab;
+  }
+
+  @for $i from 1 through length($list) {
+    $item: nth($list, $i);
+    $result: $result + if($pre, $indent + $tab, ' ');
+
+    @if length($item) > 1 {
+      $result: $result
+      + if($pre, '(list: ' + length($item) + ') ', '')
+      + map-debug($item, $pre, $level + 1);
+    } @else {
+      @if $pre {
+        $result: $result + '(' + type-of($item) + ') ';
+      }
+
+      @if length($item) == 0 {
+        $result: $result + '( )';
+      } @else if type-of($item) == string {
+        $result: $result + quote($item);
+      } @else if $item == null {
+        $result: $result + 'null';
+      } @else {
+        $result: $result + $item;
+      }
+    }
+
+    @if $i != length($list) {
+      $result: $result + ',' + $break;
+    }
+  }
+
+  @return quote($result);
+}
+
+/// Mixin displaying clean debug
+/// @param {List} $list - list
+/// @outputs A display of the map on the body
+
+@mixin map-debug($list) {
+  body:before {
+    display: block !important;
+    margin: 1em !important;
+    padding: 0.5em !important;
+    content: map-debug($list, true) !important;
+    white-space: pre-wrap !important;
+    color: #333 !important;
+    border: 1px solid #ddd !important;
+    border-radius: 0.2em !important;
+    background: #efefef !important;
+    text-shadow: 0 1px white !important;
+    font: 0.75em/1.5 'Courier New', monospace  !important;
+  }
+}

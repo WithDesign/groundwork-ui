@@ -1,0 +1,329 @@
+// sass-lint:disable no-qualifying-elements force-element-nesting force-pseudo-nesting force-attribute-nesting
+
+// Mixen to create styles required to create the slider
+// ==========================================================================
+@include run-debug-start((framework, components, plugins), ❖ Slider, get('plugins, slider'));
+@if plugin-active(slider) == true {
+  // Extends
+  // ===============================
+
+  %animation {
+    @include transform(translateZ(0));
+    @include transition(all 0.5s ease-out);
+  }
+
+  %slide-control-base {
+    position: relative;
+    display: block;
+    width: 40px;
+    height: 40px;
+    background-color: color(greyscale, dark-grey);
+
+    @include shadow(1);
+
+    &:before {
+      position: absolute;
+      top: 12px;
+      left: 35%;
+      padding-right: 0.5em;
+      text-decoration: inherit;
+      color: color(greyscale, white);
+      font:  {
+        weight: normal;
+        style: normal;
+        size: 18px;
+        family: FontAwesome;
+      }
+    }
+  }
+
+  %slide-control-left {
+    float: left;
+    &:before {
+      content: '\f053';
+    }
+  }
+
+  %slide-control-right {
+    float: right;
+    &:before {
+      content: '\f054';
+    }
+  }
+
+  %slide-animation {
+    opacity: 1;
+
+    @include transition(all 1s ease-out 0.6s);
+  }
+
+
+  // Slider
+  // ===============================
+
+  .content-slider {
+    overflow: hidden;
+    width: 100%;
+    min-height: 500px;
+    margin: 0 auto;
+
+    @include transform(translateZ(0));
+    @include transition(all 0.5s ease-out);
+    @include breakpoint(sm) {
+      overflow: visible;
+      min-height: 10px;
+    }
+    @include breakpoint(md) {
+      max-width: 970px;
+    }
+    @include breakpoint(lg) {
+      max-width: 1170px;
+    }
+
+    h2 {
+      margin: 40px 0 25px;
+      padding: 0 0 10px;
+      border-bottom: 1px solid color(greyscale, grey);
+    }
+
+    label,
+    a {
+      cursor: pointer;
+      text-decoration: none;
+      color: color(brand, primary);
+    }
+
+    label,
+    a {
+      &:hover {
+        color: color(greyscale, black) !important;
+      }
+    }
+
+    label,
+    .slide-active,
+    img {
+      @include prefix(user-select, none);
+    }
+
+    // Slider Setup
+
+    input {
+      display: none;
+    }
+
+    .slides-overflow {
+      @include breakpoint(sm) {
+        overflow: hidden;
+        width: 100%;
+      }
+    }
+
+    article img {
+      width: 100%;
+    }
+
+    .slides {
+      .inner {
+        width: 500%;
+        line-height: 0;
+      }
+      article {
+        position: relative;
+        float: left;
+        width: 20%;
+      }
+    }
+
+    .slides {
+      margin: 0;
+      padding: 1%;
+      border-radius: 5px;
+      background: color(greyscale, white);
+
+      @include shadow(1);
+
+      .inner {
+        @include transform(translateZ(0));
+        @include transition(all 800ms cubic-bezier(0.77, 0, 0.175, 1));
+        @include transition-timing-function(cubic-bezier(0.77, 0, 0.175, 1));
+      }
+    }
+
+    // Controls
+    // =============
+
+    .slide-controls {
+      width: 100%;
+      height: 150px;
+      margin: -35% 0 0;
+
+      @include breakpoint(sm) {
+        width: 100%;
+        height: 150px;
+        margin: -35% 0 0;
+      }
+
+      label {
+        display: none;
+        width: 50px;
+        height: 50px;
+        opacity: 0.3;
+
+        @include transform(scale(0.8));
+        @include breakpoint(sm) {
+          @include transform(scale(1));
+        }
+      }
+    }
+
+    .slide-active {
+      margin: 17.5% 0 0;
+      text-align: center;
+
+      label {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background: color(greyscale, grey);
+
+        &:hover {
+          background: color(greyscale, grey);
+        }
+      }
+    }
+
+    .slide-controls label:hover {
+      opacity: 0.8;
+    }
+
+    $num-slides: get('plugins, slider, num-slides');
+
+    @for $i from 1 through $num-slides {
+
+      @if $i == 1 {
+        // Sets Up Slides
+        #slide#{$i}:checked ~ .slides .inner {
+          margin-left: 0;
+        }
+        // Creates Left Control
+        #slide#{$i}:checked ~ .slide-controls label:nth-child(5) {
+          @extend %slide-control-base;
+          @extend %slide-control-left;
+        }
+      } @else {
+        // Sets Up Slides
+        #slide#{$i}:checked ~ .slides .inner {
+          $slide-margin: - + 100 * ($i - 1) + %;
+          margin-left: $slide-margin;
+        }
+        // Creates Left Control
+        $slides-left: $i - 1;
+        #slide#{$i}:checked ~ .slide-controls label:nth-child(#{$slides-left}) {
+          @extend %slide-control-base;
+          @extend %slide-control-left;
+        }
+      }
+
+      // Creates Right Control
+      @if $i == $num-slides {
+
+        #slide#{$i}:checked ~ .slide-controls label:nth-child(1) {
+          @extend %slide-control-base;
+          @extend %slide-control-right;
+        }
+      } @else {
+
+        $slides-right: $i + 1;
+        #slide#{$i}:checked ~ .slide-controls label:nth-child(#{$slides-right}) {
+          @extend %slide-control-base;
+          @extend %slide-control-right;
+        }
+      }
+
+      // Gives active toggles color
+      #slide#{$i}:checked ~ .slide-active label:nth-child(#{$i}) {
+        @extend .bg-white;
+      }
+
+      // Creates animations between slides
+      #slide#{$i}:checked ~ .slides article:nth-child(#{$i}) .info {
+        @extend %slide-animation;
+      }
+    }
+
+    // Slide Animations
+    // =============
+
+    .slide-active {
+      @extend %animation;
+      label {
+        @extend %animation;
+      }
+    }
+
+    .info h2,
+    .info,
+    .slide-controls,
+    .slides {
+      @extend %animation;
+    }
+
+    .slide-controls label {
+      @include transform(translateZ(0));
+      @include transition(opacity 0.2s ease-out);
+    }
+
+    // Info Box
+    // =============
+
+    .info {
+      position: absolute;
+      z-index: 100;
+      top: 175px;
+      width: 100%;
+      margin: 15px 0 0;
+      padding: 5px;
+      text-align: left;
+      opacity: 0;
+      color: color(greyscale, dark-grey);
+      background-color: color(greyscale, white);
+      line-height: 20px;
+
+      @include shadow(2);
+      @include breakpoint(sm) {
+        top: initial;
+        bottom: 0;
+        margin: 30px;
+        padding: 15px;
+
+        @include calc(width, 95%, '100% - 55px');
+      }
+
+      h2 {
+        margin: 0 0 5px;
+        border: 0;
+
+        @include line-height(12);
+        @include font-size(24px);
+        @include breakpoint(sm) {
+          max-width: 70%;
+        }
+      }
+
+      p {
+        max-width: 100%;
+        margin: 0 0 15px;
+
+        @include breakpoint(sm) {
+          max-width: 100%;
+        }
+        @include breakpoint(md) {
+          max-width: 70%;
+        }
+      }
+    }
+  }
+}
+@include run-debug-end((framework, components, plugins), ❖ Slider);

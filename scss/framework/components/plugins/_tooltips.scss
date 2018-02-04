@@ -1,0 +1,63 @@
+
+// Tooltips
+// ==========================================================================
+@include run-debug-start((framework, components, plugins), ❖ Tooltips, get('plugins, tooltips'));
+@if plugin-active(tooltips) == true {
+
+  // Extend or markup classes
+  .tooltip-tr {
+    @include tooltip(tr, color(brand, primary), false);
+  }
+
+  .tooltip-br {
+    @include tooltip(br, color(brand, primary), false);
+  }
+
+  .tooltip-bl {
+    @include tooltip(bl, color(brand, primary), false);
+  }
+
+  .tooltip-tl {
+    @include tooltip(tl, color(brand, primary), false);
+  }
+
+  // Tooltip that allows any type of content to be added within tooltip
+  // =========================
+
+  a.tooltip {
+    outline: none;
+
+    &:hover {
+      text-decoration: none;
+
+      span {
+        position: absolute;
+        display: inline;
+        color: color(greyscale, black);
+        border: 1px solid darken(color(greyscale, light-grey), 5%);
+        background: color(greyscale, light-grey);
+      }
+    }
+
+    span {
+      z-index: 10;
+      display: none;
+      max-width: 300px;
+      margin:  {
+        top: -30px;
+        left: 28px;
+      }
+      padding: 14px 20px;
+      border-radius: 4px;
+      line-height: 16px;
+
+      @include shadow(2);
+    }
+  }
+
+  .callout {
+    z-index: 20;
+    border: 0;
+  }
+}
+@include run-debug-end((framework, components, plugins), ❖ Tooltips);

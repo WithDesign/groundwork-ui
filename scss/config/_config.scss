@@ -1,0 +1,16 @@
+$base-font-size: 16px !default;
+
+@include BUILD('✚ Starting Framework Config');
+@import 'active';
+@import 'utilities';
+@import 'colors';
+@import 'button';
+@import 'gradients';
+@import 'normalize';
+@import 'shadows';
+@import 'template';
+@import 'typography';
+@import 'animate';
+@import 'keyframe-library/keyframe-library';
+@import 'fontawesome';
+@include BUILD('✔ Framework Config Successfully Compiled');

@@ -1,0 +1,63 @@
+// Importing Base Styles
+// ==========================================================================
+
+@import 'root/root';
+@import 'typography/typography';
+@import 'infra-components/components';
+
+// Creating Grid Systems
+// ==========================================================================
+
+@include run-debug-start((framework, infra, builder), ■ Grids, get('grid'));
+$col-size: map-keys(get('grid, setup, breakpoints')) !default;
+$grid-columns: get('grid, grid-columns');
+
+@include flexbox-grid($col-size, $grid-columns);
+@if get('grid, ie-fallback') != false {
+  @include fallback-grid($col-size);
+}
+@if get('grid, masonry-import') != false {
+  @include masonry-grid(get('grid, setup, breakpoints'));
+}
+@include run-debug-end((framework, infra, builder), ■ Grids);
+
+// Creating Other Element Styles
+// ==========================================================================
+
+// Tables
+@include run-debug-start((framework, infra, builder), ■ Tables, get('infra, tables'));
+@if infra-value(tables) != false {
+  @include infra-table(infra-value(tables));
+}
+@include run-debug-end((framework, infra, builder), ■ Tables);
+
+// Box Modal
+@include run-debug-start((framework, infra, builder), ■ Box Modal, get('infra, box-modal-values'));
+@if infra-value(box-modal) != false {
+  @include infra-box-modal(infra-value(box-modal), infra-value(box-modal-values));
+}
+@include run-debug-end((framework, infra, builder), ■ Box Modal);
+
+// Display Classes
+@include run-debug-start((framework, infra, builder), ■ Display, get('infra, display'));
+@if infra-value(display) != false {
+  @include infra-display(infra-value(display));
+}
+@include run-debug-end((framework, infra, builder), ■ Display);
+
+// Color Classes
+@include run-debug-start((framework, infra, builder), ■ Colors Classes, get('infra, color-classes'));
+@if infra-value(color-classes) != false {
+  @include infra-colors(get('colors'));
+}
+@include run-debug-end((framework, infra, builder), ■ Colors Classes);
+
+// Shadow Classes
+@include run-debug-start((framework, infra, builder), ■ Shadow Classes, get('infra, shadow-active'));
+@if infra-value(shadow-active) != false {
+  @include infra-shadow(infra-value(shadow-active));
+}
+@include run-debug-end((framework, infra, builder), ■ Shadow Classes);
+
+// Creates keyframes/animations
+@include create-keyframe-animate-class($create-keyframes, $create-animation-library);

@@ -1,0 +1,292 @@
+////
+/// Class Creators
+/// @group class-creator
+////
+
+@include run-debug-start((framework, util, class-creators), '✪ Creator: Icon Render');
+
+// Example Config
+// Can accept any file extension, or inline-svg specified by type key
+//
+// $icons: (
+//   icons: (
+//     setup: (
+//       dir-name: 'img', // For asset path
+//       default-image-width: 20px,
+//       default-image-height: 20px,
+//       default-font-size: 18px,
+//     ),
+//     library: (
+//       iphone: (
+//         file: (
+//           type: 'inline-svg',
+//           name: 'iphone',
+//           data: '<svg viewBox="0 0 17 36" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-310, -26)" fill="#fff"><g transform="translate(19, 22)"><g transform="translate(14, 0)"><path d="M290.7,4 L280.3,4 C278.5,4 277,5.5 277,7.3 L277,36.7 C277,38.5 278.5,40 280.3,40 L290.7,40 C292.5,40 294,38.5 294,36.7 L294,7.3 C294,5.5 292.5,4 290.7,4 L290.7,4 Z M285.5,5 C285.8,5 286,5.2 286,5.5 C286,5.8 285.8,6 285.5,6 C285.2,6 285,5.8 285,5.5 C285,5.2 285.2,5 285.5,5 L285.5,5 Z M284,7 L287,7 C287.3,7 287.5,7.2 287.5,7.5 C287.5,7.8 287.3,8 287,8 L284,8 C283.7,8 283.5,7.8 283.5,7.5 C283.5,7.2 283.7,7 284,7 L284,7 Z M285.5,39 C284.7,39 284,38.3 284,37.5 C284,36.7 284.7,36 285.5,36 C286.3,36 287,36.7 287,37.5 C287,38.3 286.3,39 285.5,39 L285.5,39 Z M293,35 L278,35 L278,9 L293,9 L293,35 L293,35 Z" id="iPhone-5"></path></g> </g></g></g></svg>',
+//         )
+//       ),
+//       android: (
+//          file: (
+//           type: 'svg',
+//           name: 'iphone',
+//         )
+//       ),
+//       ipad: (
+//          file: (
+//           type: 'png',
+//           name: 'ipad',
+//         )
+//       ),
+//     )
+//   )
+// );
+
+/// @name Image Icon Creator Mixin
+/// @param {string | key} $icon - Can be a url, a variable (please encode svg), or a key to the image map
+/// @param {Map} $icon-style - A map of css properties and attributes
+/// @outputs styles to create icon from image
+
+@mixin image-icon($icon, $icon-style: ()) {
+  // Sets color to var
+  $color: ();
+  $width: ();
+  $height: ();
+
+  @if map-has-key($icon-style, color) {
+    $color: map-get($icon-style, color);
+  } @else {
+    $color: default;
+  }
+
+  @if map-has-key($icon-style, width) {
+    $width: map-get($icon-style, width);
+  } @else {
+    $width: get('icons, setup, default-image-width');
+  }
+
+  @if map-has-key($icon-style, height) {
+    $height: map-get($icon-style, height);
+  } @else {
+    $height: get('icons, setup, default-image-height');
+  }
+
+  // Sets all other styles to var to be parsed
+  $styles: map-remove($icon-style, color, width, height);
+
+  // Get icon from map if exists else use current data
+  // TODO:: Validate all icons including data
+  $image-map: get('icons, library');
+  @if _has($image-map, $icon) {
+    $icon: get-image($icon);
+  }
+
+  // Get icon with original color set
+  @if $color == default {
+
+    @if _starts-with($icon, 'data') {
+      $icon: url($icon);
+    }
+    background: {
+      image: (#{$icon});
+      size: contain;
+      position: center;
+      repeat: no-repeat;
+    }
+  } @else {
+    // Sets a new color for the icon
+    background-color: $color;
+    @include prefix(mask-image, url(quote(#{$icon})));
+    @include prefix(mask-size, contain);
+    @include prefix(mask-repeat, no-repeat);
+    @include prefix(mask-position, center);
+  }
+  // Default properties
+  position: relative;
+  display: inline-block;
+  width: $width;
+  height: $height;
+  // Creates propeerties in map
+  @if $icon-style == null {
+    // Skipping creation
+  } @else {
+    @each $property, $attr in $styles {
+      #{$property}: $attr;
+    }
+  }
+}
+
+/// @name Parse image url from name
+/// @param {key} $name - name of image you need url for
+/// @return url for image
+
+@function get-image($name) {
+  // Get all data from settings
+  $image-map: get('icons, library');
+  $image-dir: get('icons, setup, dir-name');
+
+  $return-value: ();
+
+  // Gets all names within images
+  $keys: map-keys($image-map);
+  // Checks to see if $name exists
+  @if index($keys, $name) == null {
+     @include FATAL('This image does not exist within the image library map.');
+  } @else {
+    // Put everything together
+    $get-icon-data: map-get($image-map, $name);
+    $file-type: map-deep-get($get-icon-data, file, type);
+    $file-name: map-deep-get($get-icon-data, file, name);
+
+
+   @if $file-type == 'inline-svg' {
+      $return-value: svg-inline(map-deep-get($get-icon-data, file, data));
+    } @else {
+      $return-value: asset($image-dir, #{$file-name + '.' + $file-type});
+    }
+  }
+  // Return
+  @return $return-value;
+}
+
+/// @name Image Icon Creator Mixin
+/// @param {string | key} $icons - can be a variable for the font element or a string
+/// @param {map} $icon-style - A map of css properties and attributes
+/// @param {key} $type [fontAwesome] - icons can be either fontAwesome icons
+/// @outputs font icon properties
+
+@mixin font-icon($icons, $icon-style: (), $type: fontAwesome) {
+  $font-size: ();
+  // Gets default font-size
+  @if map-has-key($icon-style, font-size) {
+    $font-size: map-get($icon-style, font-size);
+  } @else {
+    $font-size: get('icons, setup, default-font-size');
+  }
+
+  // Sets all other styles to var to be parsed
+  $styles: map-remove($icon-style, font-size);
+
+  position: relative;
+  &::before {
+    $content: render-font($icons);
+    @debug $content;
+    @if $type == fontAwesome {
+      font: {
+        family: FontAwesome;
+        style: normal;
+        weight: normal;
+        decoration: inherit;
+      }
+      content: #{'"' + $content + '"'};
+    } @else {
+      @error '#{$type} is not a valid type';
+    }
+    line-height: $font-size;
+    @include font-size($font-size);
+
+    @if $icon-style {
+      @each $property, $attr in $styles {
+        @if $property == shadow {
+          @include shadow((level: $attr,
+            type: light,
+            text: true
+          )...);
+        } @else {
+          #{$property}: $attr;
+        }
+      }
+    }
+  }
+}
+
+/// @name Font String Render
+/// Renders mutiple/simple icons in a single content string with spacing.
+/// @param {string} - A list of font elements for content
+/// @return A string of icons
+
+@function render-font($icons) {
+  $return-value: ();
+  $string: ();
+
+  $length: length($icons);
+  @if $length == 0
+  or $length == null {
+    @error 'Uh oh! No icons passed!';
+  } @else {
+    $count: 1;
+    @while $count <= $length {
+      @if $count == $length {
+        $insert: unquote(nth($icons, $count));
+        $string: join($insert, $string);
+      } @else {
+        // Adds space btween icons
+        $insert: '\0020' unquote(nth($icons, $count));
+        $string: join($insert, $string);
+      }
+      $count: $count + 1;
+    }
+  }
+  $return-value: _str-reverse($string);
+  @return $return-value;
+}
+
+/// @name Icon Mixin
+/// @param {key} $type - Image or font type -> fontAwesome
+/// @param {string | key} - Can be a string, a variable, or a key to the image map
+/// @param {map} $icon-style - A map of css properties and attributes
+/// @return the icon and all its properties
+
+@mixin icon($type, $icon, $icon-style) {
+  @if $type == image {
+    @include image-icon($icon, $icon-style);
+  } @else {
+    @include font-icon($icon, $icon-style, $type);
+  }
+}
+
+/// @name Sprite Animation
+/// @param {string} $name - Name of animation
+/// @param {key | string} $data - Can be a url, a variable (please encode svg), or a key to the image map
+/// @param {value} $width - width of frame for animation
+/// @param {value} $height -  Height of frame for animation
+/// @param {value} $sprite-width - Width of image
+/// @param {value} $time - Time duration
+/// @param {value} $steps - Number of steps in sprite animation
+/// @param {value} $play-state - forwards, infinite, or a number for looping
+/// @return Styles to create a simple animation based off an image
+
+@mixin sprite-animation($name, $data, $width, $height, $sprite-width, $time, $steps, $play-state) {
+  // We need to check name with a global map
+  $namecheck: () !default;
+  @if index($namecheck, $name) {
+    @include FATAL('#{$name} is a duplicate name for the animation, please make it a unique name!');
+  } @else {
+    $namecheck: append($namecheck, $name) !global;
+  }
+
+  // Sets sprite image as background and sets sprite size
+  @include image-icon((
+    icon: $data,
+    icon-style: (
+      width: $width,
+      height: $height
+    )
+  )...);
+
+  // Create animation
+  @include animation($name $time steps($steps) $play-state);
+
+  // Create keyframe at root
+  @at-root {
+      @include keyframes($name) {
+      from {
+        background-position: 0px;
+      }
+      to {
+        // Slides through sprite similar to a timeline
+        background-position: -#{$sprite-width};
+      }
+    }
+  }
+}
+
+@include run-debug-end((framework, util, class-creators), '✪ Creator: Icon Render');

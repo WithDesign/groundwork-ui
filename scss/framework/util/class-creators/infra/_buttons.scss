@@ -1,0 +1,92 @@
+////
+/// Class Creators
+/// @group class-creator
+////
+@include run-debug-start((framework, util, class-creators), '✪ Creator:create-btn');
+/// @name Infrastructure Button Override Checker
+/// Checks to see if styles need a override
+/// @param {map} $button - Map containing all button args
+/// @param {map} $override - A possible map containing override argumants
+/// @param {key} $key - What style of button is bing used ie 'primary', 'default'
+/// @returns {string} with the override arg or the default
+
+@function btn-override($button, $key, $override) {
+  $return-value: ();
+
+  @if $override == null {
+    $return-value: map-get($button, $key);
+  } @else if map-has-key($key) {
+    $return-value: map-get($key);
+  } @else {
+    $return-value: map-get($button, $key);
+  }
+
+  @return $return-value;
+}
+
+/// @name Infrastructure Button Creator
+/// Creates basic button styles
+/// @param {key} $label - what button styles you would like ie 'primary', 'default' ect.
+/// @param {map} $override [null]  - Written as a map, call any key to override styles of the default
+/// @outputs A styled button
+
+@mixin create-btn($label, $override: null, $active: infra-value(button-create)) {
+
+  @if $active == false {
+    @error 'You must set $button-create to true to use this mixin';
+  }
+
+  // Combining all button maps
+  $global-buttons: get('buttons, types');
+
+  // Help function
+  @if $label == help {
+    $help: map-keys($global-buttons);
+    @include INFO('Available style options: #{$help}. \A Available override options: padding, color, border, border-radius, background, shadow, hover-shadow hover-border hover-color'); // sass-lint:disable-line mixin-name-format
+  }
+  // Gets the map that contains all args associated with the key
+  $button: map-get($global-buttons, $label);
+
+  // Grabbing all args and assiging to a var
+  $padding: btn-override($button, padding, $override);
+  $text-color: btn-override($button, color, $override);
+  $border: btn-override($button, border, $override);
+  $border-rad: btn-override($button, border-radius, $override);
+  $background-color: btn-override($button, background, $override);
+  $shadow: btn-override($button, shadow, $override);
+  $hover-shadow: btn-override($button, hover-shadow, $override);
+  $hover-border: btn-override($button, hover-border, $override);
+  $hover-text-color: btn-override($button, hover-color, $override);
+
+  padding: $padding;
+  color: color-call-extra($text-color);
+  border: $border;
+  border-radius: $border-rad;
+  background-color: color-call-extra($background-color);
+
+  @include box-shadow($shadow);
+
+  &:hover,
+  &:focus {
+    color: color-call-extra($hover-text-color);
+    border: $hover-border;
+
+
+    background-color: darken(color-call-extra($background-color), 15%);
+
+    @include box-shadow($hover-shadow);
+  }
+
+  &:active {
+    border: $hover-border;
+    background-color: darken(color-call-extra($background-color), 25%);
+
+    &:hover,
+    &:focus {
+      border: $hover-border;
+      background-color: darken(color-call-extra($background-color), 25%);
+    }
+  }
+}
+
+@include run-debug-end((framework, util, class-creators), '✪ Creator:create-btn');

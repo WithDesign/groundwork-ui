@@ -1,0 +1,203 @@
+////
+/// Class Creators
+/// @group class-creator
+////
+
+@include run-debug-start((framework, util, class-creators), '✪ Creator:Preloaders');
+
+/// @name Dot Loader Timing
+/// @access private
+/// @type Map
+$dots-timing: get('plugins, preloader, dots-timing') !default;
+
+/// @name Dot Loader Size
+/// @access private
+/// @type Map
+$dots-size: get('plugins, preloader, dots-size') !default;
+
+
+/// @name Dot Loader Padding
+/// @access private
+/// @type Map
+$dots-padding: get('plugins, preloader, dots-padding') !default;
+
+%loading-extend {
+  position: absolute;
+  border-sizing: border-box;
+  @include z-index(4);
+}
+
+%dots-extend {
+  position: relative;
+  bottom: -1px;
+  display: block;
+  float: left;
+  width: $dots-size;
+  height: $dots-size;
+  margin: 0 1px;
+  will-change: opacity top bottom;
+  opacity: 0.4;
+  border-radius: 50%;
+
+  @include transition(all 0.3s ease);
+}
+
+@include run-debug-start((framework, util, class-creators), '✪ Creator:Round Preloader');
+
+/// @name Round Loaders
+/// Creates 2 loaders one small and one large
+/// @param {string} $selector-name - name of the loader
+/// @param {list} $color - color of loader
+/// @param {list} $include-animation [true] - if you want an animation
+/// @param {list} $active [$preloader] - to ensure correct animation is imported
+/// @outputs Styles for a round loaders
+/// @example
+///    @include round-loader(error, color(brand, danger));
+
+
+@mixin round-loader($selector-name, $color, $include-animation: true, $active: plugin-active(preloader)) {
+
+  @if $active == false {
+    @include FATAL('Please set `preloader` to true to use the loader'); // sass-lint:disable-line mixin-name-format
+  }
+
+  @if $selector-name == help {
+    @include INFO('Order: \A selector-name: A name for the selector, color, include-animation: Set to true for animation, active: checker to see if active'); // sass-lint:disable-line mixin-name-format
+  }
+
+  .#{$selector-name}-wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(color(greyscale, white), 0.8);
+
+    @extend %loading-extend;
+  }
+
+  .#{$selector-name} {
+    $size: 35px;
+    position: relative;
+    width: $size;
+    height: $size;
+    margin: 0 auto;
+    border: 0.25rem solid rgba($color, 0.2) {
+      width: 0.5rem;
+      style: double;
+      top-color: $color;
+      radius: 50%;
+    }
+
+    @include calc(top, 45%, '50%  - #{$size}');
+
+    @if $include-animation == true {
+      @include animation(spin 1s infinite linear);
+    }
+  }
+
+  .#{$selector-name}-sm-wrapper {
+    position: relative;
+    width: 100%;
+    height: 20px;
+
+    @extend %loading-extend;
+  }
+
+  .#{$selector-name}-sm {
+    position: relative;
+    width: 15px;
+    height: 15px;
+    margin: 0 auto;
+    animation-delay: 0s;
+    border: 2px solid rgba($color, 0.2) {
+      width: 2px;
+      top-color: $color;
+      radius: 50%;
+    }
+
+    @if $include-animation == true {
+      @include animation(spin 1s infinite);
+    }
+  }
+}
+
+@include run-debug-end((framework, util, class-creators), '✪ Creator:Round Preloader');
+
+@include run-debug-start((framework, util, class-creators), '✪ Creator:Dot Preloader');
+
+/// @name Dot Loaders
+/// Creates a loader with 3 dots bouncing
+/// @param {string} $selector-name - name of the loader
+/// @param {list} $color - color of loader
+/// @param {list} $include-animation [true] - if you want an animation
+/// @param {list} $active [$preloader] - to ensure correct animation is imported
+/// @outputs Styles for a dot loader
+
+@mixin dot-loader($selector-name, $color, $include-animation: true, $active: plugin-active(preloader)) {
+
+  @if $active == false {
+    @include FATAL('Please set `$preloader` to true to use the loader'); // sass-lint:disable-line mixin-name-format
+  }
+
+  .#{$selector-name}-dots-wrapper {
+    position: relative;
+    width: 100%;
+    height: ($dots-size + ($dots-padding * 2));
+
+    @extend %loading-extend;
+  }
+
+  .#{$selector-name}-dots {
+    position: relative;
+    width: 36px;
+    margin: 0 auto;
+    padding: $dots-padding 0;
+
+    &::before,
+    &::after {
+      content: '';
+      background-color: $color;
+
+      @extend %dots-extend;
+    }
+    &::after {
+      @if $include-animation == true {
+        @include animation(0.75s blink infinite (3 * $dots-timing));
+      }
+    }
+    &::before {
+      @if $include-animation == true {
+        @include animation(0.75s blink infinite (1 * $dots-timing));
+      }
+    }
+
+    span {
+      background-color: $color;
+
+      @extend %dots-extend;
+      @if $include-animation == true {
+        @include animation(0.75s blink infinite (2 * $dots-timing));
+      }
+    }
+  }
+}
+
+@if plugin-active(preloader) == true or  plugin-active(preloader) == 'true import' {
+  // Creates animation
+  @include keyframes(spin) {
+    0% {
+      @include transform(rotate(0deg));
+    }
+    100% {
+      @include transform(rotate(360deg));
+    }
+  }
+
+  @include keyframes(blink) {
+    50% {
+      top: -3px;
+      opacity: 1;
+    }
+  }
+}
+@include run-debug-end((framework, util, class-creators), '✪ Creator:Dot Preloader');
+
+@include run-debug-end((framework, util, class-creators), '✪ Creator:Preloaders');

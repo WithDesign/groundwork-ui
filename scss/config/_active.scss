@@ -1,0 +1,82 @@
+// sass-lint:disable leading-zero, no-trailing-zero, zero-unit
+
+// Activate Plugins and Fonts
+// ==========================================================================
+
+//Set to true to activate and imported and styles
+
+/// @name Active Modules
+/// @group groundwork-config
+/// @access private
+/// @type Map
+$active: (
+  theme: (
+    default: true
+  ),
+  global: (
+    show-logs: false,
+    run-tests: false,
+    debug: (true detailed), // Do not change
+  ),
+  debug: ( // different levels of debug -true-- general debug to ensure it hit the file -detailed--Super detailed debug at that level --- MAY HAVE PREFORMANCE ISSUES
+    framework: (
+      components: (
+        plugins: false,
+        template: false
+      ),
+      infra: (
+        components: false,
+        root: false,
+        typography: false,
+        builder: false
+      ),
+      util: (
+        class-creators: false,
+        tools: false
+      ),
+    )
+  ),
+  infra: (
+    shadow-active: true,
+    tables: default,
+    box-modal: default,
+    box-modal-values: 15,
+    display: default,
+    button-create: true,
+    default-buttons-active: true,
+    form-group-default: true,
+    form-group-fancy: true,
+    color-classes: true,
+  ),
+  plugins: (
+    ratings: (
+      active: true,
+      max-rating: 5
+    ),
+    tooltips: (
+      active: true
+    ),
+    accordion: (
+      active: true
+    ),
+    flow-text: (
+      active: true
+    ),
+    modal: (
+      active: true
+    ),
+    progress-bar: (
+      active: true,
+    ),
+    preloader: (
+      active: true,
+      dots-timing: 0.2s,
+      dots-size: 10px,
+      dots-padding: 10px
+    ),
+    slider: (
+      active: true,
+      num-slides: 5
+    )
+  )
+) !default;

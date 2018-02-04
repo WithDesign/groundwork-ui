@@ -1,0 +1,50 @@
+@import 'accordion';
+@import 'tooltips';
+@import 'slider';
+
+// Progress Bar
+@include run-debug-start((framework, components, plugins), ❖ Progress Bar, get('plugins, progress-bar'));
+@if plugin-active(progress-bar) == true {
+  .progress-bar {
+    @include progress-bar();
+  }
+}
+@include run-debug-end((framework, components, plugins), ❖ Progress Bar);
+
+// Flow Text
+@include run-debug-start((framework, components, plugins), ❖ Flow Text, get('plugins, flow-text'));
+@if plugin-active(flow-text) == true {
+  .flow-text {
+    @include flow-text();
+  }
+}
+@include run-debug-end((framework, components, plugins), ❖ Flow Text);
+
+// Modals
+@include run-debug-start((framework, components, plugins), ❖ Modals, get('plugins, modal'));
+@if plugin-active(modal) == true {
+  @include modal();
+}
+@include run-debug-end((framework, components, plugins), ❖ Modals);
+
+// Slider
+@include run-debug-start((framework, components, plugins), ❖ Preloader, get('plugins, preloader'));
+@if plugin-active(preloader) == 'true import' {
+  @include round-loader(loading, color(brand, secondary));
+  @include dot-loader(loading, color(brand, secondary));
+}
+@include run-debug-end((framework, components, plugins), ❖ Preloader);
+
+// Ratings
+@include run-debug-start((framework, components, plugins), ❖ Ratings, get('plugins, ratings'));
+@if plugin-active(ratings) == true {
+  $max-rating: get('plugins, ratings, max-rating');
+  $count: 0.5;
+  @while $count <= $max-rating {
+    .rating-#{find-replace('#{$count}', '.', '-')} {
+      @include rating('#{$count}');
+    }
+    $count: $count + 0.5;
+  }
+}
+@include run-debug-end((framework, components, plugins), ❖ Ratings);

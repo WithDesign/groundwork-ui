@@ -1,0 +1,159 @@
+// sass-lint:disable function-name-format quotes
+
+@include run-debug-start((framework, util, tools), '✎ Tool: Gradient Creator');
+
+////
+/// Gradients
+/// @group tools
+////
+
+// Gradient Creator
+// ==========================================================================
+
+/// @name Merges presets
+/// Merges gradient presets
+/// @param {list} $type
+/// @param {list} $direction
+/// @param {list} $stop
+/// @return {list} properties
+
+@function preset-merge($type, $direction, $stop) {
+  $start: g-get($type);
+  $middle: g-get($direction);
+  $end: g-get($stop);
+
+  $merge: $start + "(#{$direction}, #{$end})";
+  @return $merge;
+}
+
+/// @name Get Gradient
+/// Grabs Maps then checks to see if key exist if it does returns vale assosiated with that key
+/// @param {key} $value
+/// @param {map} $presets [$global-presets]
+/// @return {string} font url
+
+@function g-get($value, $presets: $global-presets) {
+  $gradient-type: map-get($presets, gradient-type);
+  $direction-preset: map-get($presets, preset-direction);
+  $preset-color: map-get($presets, preset-stop);
+  $full-preset: map-get($presets, full-preset);
+
+  @if map-has-key($gradient-type, $value) == true {
+    @return map-get($gradient-type, $value);
+  } @else if map-has-key($preset-direction, $value) == true {
+    @return map-get($preset-direction, $value);
+  } @else if map-has-key($preset-stops, $value) == true {
+    @return map-get($preset-stops, $value);
+  } @else {
+    @error '`#{$value}` is not a key in gradient presets.';
+  }
+}
+
+/// @name Merge Gradient
+/// Merges gradient into string when not useing a preset
+/// @param {map} $map
+/// @return {string} gradient string
+
+@function gradient-merge($map) {
+  $type: map-get($map, type);
+  $direction: map-get($map, direction);
+  $stops: map-get($map, stops);
+  $merge: $type + "(#{$direction}, #{$stops})";
+  @return $merge;
+}
+
+/// @name Gradient Function
+/// Main function to create gradients when not useing a full preset
+/// @param {list} $type
+/// @param {list} $direction [null]
+/// @param {list} $$color-stops [null]
+/// @param {list} $presets [$global-presets]
+/// @return {string} Gradient string
+
+@function gradient($type, $direction: null, $color-stops: null, $presets: $global-presets) {
+
+  // Gets all value from map, assigns to var
+  $gradient-type: map-get($presets, gradient-type);
+  $direction-preset: map-get($presets, preset-direction);
+  $preset-color: map-get($presets, preset-stops);
+  $full-preset: map-get($presets, full-preset);
+
+  // Checks to see if value is a proper gradient type
+  @if map-has-key($gradient-type, $type) == false and map-has-key($full-preset, $type) == false {
+    @error '`#{$gradient-type}` is not a valid gradient type for a gradient.';
+  }
+
+  // Checks to see if its useing a custom gardient or if gradient is a preset
+  @if map-has-key($gradient-type, $type) == true {
+
+    @if $direction == null {
+      @error 'There should be a direction for the gradient.';
+    }
+
+    // Checks to se if value is from a preset
+    @if map-has-key($direction-preset, $direction) == true {
+      $direction: g-get($direction);
+    }
+
+    // Checks to see if value is from a preset else it will check the length for a proper
+    @if map-has-key($preset-color, $color-stops) == true or contains($preset-color, $color-stops) == true {
+      $color-stops: g-get($color-stops);
+    }
+
+    $gradient-map: (
+      type: g-get($type),
+      direction: $direction,
+      stops: $color-stops
+    );
+
+    @return gradient-merge($gradient-map);
+
+  } @else if map-has-key($full-preset, $type) == true {
+    @return map-get($full-preset, $type);
+
+  } @else {
+    @error 'There was an error in the gradient.';
+  }
+}
+
+/// @name Gradient Mixin
+/// Main mixin to create a gradient
+/// @param {list} $type
+/// @param {list} $direction [null]
+/// @param {list} $$color-stops [null]
+/// @param {list} $presets [$global-presets]
+/// @outputs {string} background and graient string
+
+@mixin gradient($type, $direction: null, $color-stops: null, $presets: $global-presets) {
+  $gradient: ();
+  @if $type and $direction == null and $color-stops == null {
+    @if map-deep-get($presets, full-preset , $type) == null {
+      background: #{$type};
+      @each $count, $kit in $prefix {
+        $return: $kit+$type;
+        background: #{$return};
+      }
+    } @else {
+      $gradient-prop: map-deep-get($presets, full-preset , $type);
+      $type: nth($gradient-prop, 1);
+      $color-stops: nth($gradient-prop, 3);
+      $direction: nth($gradient-prop, 2);
+
+      $gradient: gradient($type, $direction, $color-stops);
+      background: #{$gradient};
+      @each $count, $kit in $prefix {
+        $return: $kit+$gradient;
+        background: #{$return};
+      }
+    }
+  } @else {
+    $gradient: gradient($type, $direction, $color-stops);
+    background: #{$gradient};
+    @each $count, $kit in $prefix {
+      $return: $kit + $gradient;
+      background: #{$return};
+    }
+  }
+}
+
+@include run-debug-end((framework, util, tools), '✎ Tool: Gradient Creator');

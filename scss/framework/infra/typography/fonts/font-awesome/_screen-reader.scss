@@ -1,0 +1,10 @@
+// Screen Readers
+// -------------------------
+@if $fa-screen-readers == true {
+  .sr-only {
+    @include sr-only();
+  }
+  .sr-only-focusable {
+    @include sr-only-focusable();
+  }
+}

@@ -1,0 +1,112 @@
+///
+/// Groundwork Setup
+/// @group Setup
+////
+
+$debug-setup: false !default;
+
+/// @name Merging maps of keyframe library
+/// @access private
+/// @type Variable
+
+$keyframes: (keyframes: map-collect($keyframes-attention-seekers, $keyframes-bouncing-entrances, $keyframes-bouncing-exits, $keyframes-fading-entrances, $keyframes-fading-exits, $keyframes-flippers, $keyframes-lightspeed, $keyframes-rotating-entrances, $keyframes-rotating-exits, $keyframes-sliding-entrances, $keyframes-sliding-exits, $keyframes-specials, $keyframes-zooming-entrances, $keyframes-zooming-exits));
+
+/// @name Merge into preset
+/// @access private
+/// @type Variable
+
+$preset-settings: map-collect($active, $animate, $buttons, $colors, $typography, $normalize, $template, $grid, $utilities, $shadow, $keyframes, $icons);
+
+/// @name User defined maps of overrides
+/// @access public
+/// @type Variable
+/// @example
+///     $db-user-defined-data: (
+///       plugins: (
+///         ratings: (
+///           active: false,
+///           max-rating: 10
+///         )
+///       ),
+///       custom-thgings: (
+///         custom: (
+///           key: value,
+///        )
+///      )
+///     ) !default;
+
+$user-defined-settings: (
+  user-empty-settings: 1
+) !default;
+
+/// @name Enables Theme Variable to be compiled
+/// @access public
+/// @type Bool
+
+$enable-theme: false !default
+
+/// @name Enables Admin Variable to be compiled
+/// @access public
+/// @type Bool
+
+$enable-admin: false !default
+
+/// @name A map containing theme overrides
+/// @access public
+/// @type Variable
+
+$theme: () !default;
+$user-merge: ();
+$full-preset: ();
+
+@if $enable-theme == true {
+  $user-merge: map-merge-recursive($user-defined-settings, $theme);
+} @else {
+  $user-merge: $user-defined-settings;
+}
+
+@if $enable-admin == true {
+  $full-preset: map-merge-recursive($preset-settings, $admin-settings);
+} @else {
+  $full-preset: $preset-settings;
+}
+
+$e: map-merge-recursive($full-preset, $user-merge);
+
+/// @name Creates base preset map
+/// @access private
+/// @type Variable
+
+$settings: set-default($e) !global;
+
+$get-user-keys: map-keys($user-merge);
+//If user config or theme is null show warning and dont merge with main settings map
+@if index($get-user-keys, user-empty-settings) {
+  @include WARN('User defined settings or theme config are null, Settings being based off of the preset config.');
+} @else {
+  // Merge with main settings map
+  $settings: set-default($user-merge);
+}
+
+
+// Debug for Setup
+@if $debug-setup == true {
+  @include DEBUG('User Merge');
+  @include DEBUG(
+    '---------- '+ '\a'
+    + $user-merge + '\a '
+    + '---------- '+ '\a '
+  );
+  @include DEBUG('full-preset');
+  @include DEBUG(
+    '---------- '+ '\a'
+    + $full-preset + '\a '
+    + '---------- '+ '\a '
+  );
+  @include DEBUG('settings');
+  @include DEBUG(
+    + '----------'+ '\a'
+    + $settings + '\a '
+    + '---------- '+ '\a '
+  );
+}

@@ -1,0 +1,107 @@
+////
+/// Class Creators
+/// @group class-creator
+////
+
+@include run-debug-start((framework, util, class-creators), '✪ Creator:Rating Render');
+
+/// @name Rating Mixin
+/// @param {intiger} $rating - Number rangeing in .5 incruments
+/// @param {map} $icons [(full: $fa-var-star, half: $fa-var-star-half-o)] - Map of to specify what is a full and half rating
+/// @param {map} $icon-style [(color: #fe7, font-size: 18px, shadow: 1)] - Map of styles to inpliment
+/// @param {key} $type [fontAwesome] - icons can be either fontAwesome icons or a encoded svg
+/// @outputs rating properties
+
+@mixin rating($rating, $icons: (full: $fa-var-star, half: $fa-var-star-half-o), $icon-style: (color: #fe7, font-size: 18px, shadow: 1), $type: fontAwesome) {
+  @if $rating == help {
+    @include INFO('Order: rating, icons: (full: , half: ), icon: (color: , font-size: , shadow: 1), type: fontAwesome or svg');
+    @include WARN('SVG feature is under development');
+  }
+
+  &::before {
+    $content: render-rating($rating, $type, $icons);
+    @if $type == fontAwesome {
+      font-family: FontAwesome;
+      font-style: normal;
+      font-weight: normal;
+      text-decoration: inherit;
+      content: #{'"' + $content + '"'};
+
+    } @else if $type == svg {
+      // Need to handle width and height here
+      @error 'Under Development';
+    } @else {
+      @error '#{$type} is not a valid type';
+    }
+
+    @each $property, $attr in $icon-style {
+      @if $property == font-size {
+        line-height: $attr;
+        @include font-size($attr);
+      } @else if $property == shadow {
+        @include shadow((level: $attr,
+          type: light,
+          text: true
+        )...);
+      } @else {
+        #{$property}: $attr;
+      }
+    }
+  }
+}
+
+/// @name Render Rating
+/// Renders strings for rating content
+/// @param {string} $rating - a rating value
+/// @param {map} $icon-type - if icons are a svg set to svg
+/// @param {map} $icons - Map of full and half icons
+/// @returns {String} string for content property
+
+@function render-rating($rating, $icon-type, $icons) {
+  $return-value: ();
+  $string: ();
+  @if $icon-type == svg {
+    // TODO leave this feature off until after release
+    @error 'svg feature in production';
+    // svg is going to be a bit challenging based on adding mutiple svg backgrounds
+  } @else if $icon-type == fontAwesome {
+    $str: quote($rating);
+
+    @if str-length($str) == 3 {
+      $value-rating: to-number($rating);
+      $loop: ceil($value-rating);
+      $count: 1;
+      $string: end;
+      @while $count <= $loop {
+        @if $count == $loop {
+          $insert: unquote(map-get($icons, half))\0020;
+          $length: length($string);
+          $string: set-nth($string, $length, $insert);
+        } @else {
+          $insert: unquote(map-get($icons, full))\0020;
+          $string: join($insert, $string);
+        }
+        $count: $count + 1;
+      }
+      $return-value: list-to-string($string);
+    } @else {
+      $value-rating: to-number($rating);
+      $loop: $value-rating;
+      $count: 1;
+
+      @while $count <= $loop {
+        $insert: unquote(map-get($icons, full))\0020;
+        $string: join($insert, $string);
+        $count: $count + 1;
+      }
+      $return-value: list-to-string($string);
+    }
+  } @else {
+    @error '#{$icon-type} is not a valid rating type';
+    $return-value: false;
+  }
+
+   @return $return-value;
+}
+
+@include run-debug-end((framework, util, class-creators), '✪ Creator:Rating Render');

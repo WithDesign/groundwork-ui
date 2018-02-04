@@ -1,0 +1,58 @@
+@include run-debug-start((framework, infra, components), ■ Extend Classes);
+// Extend classes
+// ==========================================================================
+
+.transition {
+  @include transition(all 0.3s ease);
+}
+
+.faded {
+  @include opacity(0.8);
+}
+
+.center,
+.center-block {
+  @include center-block;
+}
+
+.clear-button {
+  text-rendering: auto;
+  color: inherit;
+  font-size: inherit;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0;
+  text-shadow: none;
+  display: inline-block;
+  text-align: inherit;
+  margin: 0;
+  padding: 0;
+  background: none;
+  outline: 0;
+  border: 0;
+  border-radius: 0;
+  font-weight: inherit;
+  cursor: pointer;
+  width: inherit;
+  font-family: inherit;
+}
+
+.inherit-style {
+  padding: inherit;
+  margin: inherit;
+  width: inherit;
+  cursor: inherit;
+  color: inherit;
+  border: inherit;
+  background-color: inherit;
+  outline: 0;
+}
+
+button {
+  &.inherit-style {
+    cursor: pointer;
+  }
+}
+
+@include run-debug-end((framework, infra, components), ■ Extend Classes);

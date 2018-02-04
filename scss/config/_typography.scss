@@ -1,0 +1,113 @@
+// Typography
+// ==========================================================================
+
+/// @name Typography Options
+/// @group groundwork-config
+/// @access private
+/// @type Map
+
+$typography: (
+  typography: (
+    // Default Sizes
+    default-font-size: 16px,
+    default-line-height: 16px,
+    baseline: 24px,
+    fonts: (
+      // Main Fonts For Page
+      heading: '\'Source Sans Pro\', sans-serif',
+      primary: '\'Source Sans Pro\', sans-serif',
+      brand: '\'Source Sans Pro\', sans-serif',
+      awesome: '\'FontAwesome\', sans-serif'
+    ),
+    plugin: (
+      payment-icon: (
+        active: false,
+      ), // sass-lint:disable-line variable-name-format
+      font-awesome: (
+        active: true,
+        fa-spinning-animation: false,
+        fa-bordered-pulled: false,
+        fa-stacked-icons: false,
+        fa-icon-size: false,
+        fa-list-icons: false,
+        fa-rotate-flipped-icons: false,
+        fa-screen-readers: false,
+        fa-fixed-width-icons: false,
+        fa-font-path: '../fonts',
+        fa-base-font-size: 16px,
+        fa-line-height-base: 1,
+        fa-css-prefix: fa,
+        fa-border-color: #eee,
+        fa-inverse: #fff,
+        fa-li-width: (30em / 14)
+      )
+    ),
+    fluid-font-active: false,
+    heading: (
+      h1: (
+        level: 1,
+        font-size: 48px,
+        line-height: 65px,
+        weight: 700,
+        transform: initial
+      ),
+      h2: (
+        level: 2,
+        font-size: 42px,
+        line-height: 58px,
+        weight: 600,
+        transform: initial
+      ),
+      h3: (
+        level: 3,
+        font-size: 36px,
+        line-height: 48px,
+        weight: 600,
+        transform: initial
+      ),
+      h4: (
+        level: 4,
+        font-size: 30px,
+        line-height: 38px,
+        weight: 600,
+        transform: initial
+      ),
+      h5: (
+        level: 5,
+        font-size: 24px,
+        line-height: 34px,
+        weight: 600,
+        transform: initial
+      ),
+      h6: (
+        level: 6,
+        font-size: 16px,
+        line-height: 24px,
+        weight: 600,
+        transform: initial
+      ),
+      p: (
+        level: auto,
+        font-size: 16px,
+        line-height: 24px,
+        weight: 400,
+        transform: initial
+      ),
+      default: (
+        level: auto,
+        font-size: $base-font-size,
+        line-height: ($base-font-size + 4px),
+        weight: 400,
+        transform: initial
+      )
+    ),
+    link: (
+      link-decoration: none,
+      text-transform: initial
+    )
+  )
+);
+
+//Default hr styles
+$hr-background: color(brand, primary) !default;
+$hr-height: 1px !default;

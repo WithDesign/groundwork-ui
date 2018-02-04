@@ -1,0 +1,31 @@
+
+// Images
+// ==========================================================================
+@include run-debug-start((framework, infra, components), ■ Image Classes);
+.img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.img-rounded {
+  border-radius: 6px;
+}
+
+.img-thumbnail {
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  padding: 4px;
+  border: 1px solid lighten(color(greyscale, grey), 5%);
+  border-radius: 4px;
+  background-color: color(greyscale, white);
+  line-height: 1.42857143;
+
+  @include transition(all 0.2s ease-in-out);
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+@include run-debug-end((framework, infra, components), ■ Image Classes);

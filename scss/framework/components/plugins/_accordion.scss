@@ -1,0 +1,202 @@
+// sass-lint:disable no-qualifying-elements force-element-nesting force-pseudo-nesting force-attribute-nesting
+
+// Accordion
+// =========================================================================
+
+@include run-debug-start((framework, components, plugins), ❖ Accordion, get('plugins, accordion'));
+
+@if plugin-active(accordion) == true {
+  .accordion {
+    .transition-acc {
+      @include transition(all 0.25s ease-in-out);
+    }
+
+    .flipIn { // sass-lint:disable-line class-name-format
+      @include animation(flipdown 0.5s ease both);
+    }
+
+    .no-select {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -khtml-user-select: none;
+      -webkit-tap-highlight-color: rgba(color(greyscale, black), 0); // sass-lint:disable-line no-color-literals
+      -webkit-touch-callout: none;
+    }
+
+    h1 {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font:  {
+        weight: 100;
+      }
+      line-height: 42px;
+
+      @include font-size(36px);
+      @extend .flipIn;
+    }
+
+    h2,
+    h4 {
+      display: block;
+      margin: 20px 0;
+      cursor: pointer;
+      letter-spacing: 1px;
+      background-color: color(greyscale, white);
+      font-weight: 300;
+      line-height: 34px;
+
+      @extend .no-select;
+      @include font-size(30px);
+    }
+
+    .inner-text {
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      max-height: 800px;
+      margin-top: 14px;
+      padding: 15px 0;
+      letter-spacing: 1px;
+      opacity: 1;
+      color: color(greyscale, black);
+      line-height: 26px;
+
+      @extend .transition-acc;
+      @include font-size(17px);
+      @include transform(translate(0 , 0));
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      perspective: 900;
+
+      li {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid color(greyscale, dark-grey);
+
+        @extend .flipIn;
+
+        &:nth-of-type(1) {
+          animation-delay: 0.5s;
+        }
+
+        &:nth-of-type(2) {
+          animation-delay: 0.75s;
+        }
+
+        &:nth-of-type(3) {
+          animation-delay: 1s;
+        }
+
+        &:nth-of-type(4) {
+          animation-delay: 1.2s;
+        }
+
+        &:nth-of-type(6) {
+          animation-delay: 1.4s;
+        }
+
+        &:nth-of-type(7) {
+          animation-delay: 1.6s;
+        }
+
+        &:last-of-type {
+          padding-bottom: 0;
+        }
+
+        i {
+          position: absolute;
+          right: 0;
+          margin-top: 16px;
+
+          @include transform(translate(-6px , 0));
+
+          &:before,
+          &:after {
+            position: absolute;
+            width: 3px;
+            height: 9px;
+            content: '';
+            background-color: color(greyscale, dark-grey);
+
+            @extend .transition-acc;
+          }
+
+          &:before {
+            @include transform(translate(-2px , 0) rotate(45deg));
+          }
+
+          &:after {
+            @include transform(translate(2px , 0) rotate(-45deg));
+          }
+        }
+
+
+        input[type=checkbox] {
+          &.accord-check  {
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            opacity: 0;
+
+            &:checked {
+              & ~ .inner-text {
+                max-height: 0;
+                margin-top: 0;
+                padding: 0;
+                opacity: 0;
+
+                @include transform(translate(0 , 50%));
+              }
+
+              & ~ i {
+                &::before {
+                  @include transform(translate(2px , 0) rotate(45deg));
+                }
+
+                &::after {
+                  @include transform(translate(-2px , 0) rotate(-45deg));
+                }
+              }
+            }
+          }
+        }
+      }
+
+      @keyframes flipdown {
+        0% {
+          transform: rotateX(-90deg);
+          transform-origin: top center;
+          opacity: 0;
+        }
+        5% {
+          opacity: 1;
+        }
+        80% {
+          @include transform(rotateX(8deg));
+        }
+        83% {
+          @include transform(rotateX(6deg));
+        }
+        92% {
+          @include transform(rotateX(-3deg));
+        }
+        100% {
+          @include transform(rotateX(0deg));
+          @include transform-origin(top center);
+        }
+      }
+    }
+  }
+}
+
+@include run-debug-end((framework, components, plugins), ❖ Accordion);

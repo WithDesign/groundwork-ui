@@ -1,0 +1,236 @@
+// sass-lint:disable no-qualifying-elements force-element-nesting force-pseudo-nesting
+
+// Nav Links On New Row
+// ==========================================================================
+
+@if template-active(header, row-header) == true {
+  header.row-head {
+    position: relative;
+    z-index: 1000;
+
+    //controls color bg
+    .nav-wrapper {
+      width: 100%;
+      background-color: color(greyscale, dark-grey);
+
+      @include shadow(2);
+
+      .text {
+        display: none;
+      }
+    }
+
+    .nav-style {
+      @extend .no-padding;
+    }
+
+    .menu-wrapper {
+      @extend .container;
+      @extend .no-padding;
+    }
+
+    //controls color of top navigation
+    .logo-wrapper {
+      background-color: color(greyscale, light-grey);
+    }
+
+    #logo {
+      @extend .container;
+
+      img {
+        position: relative;
+        z-index: 10;
+        display: block;
+        float: left;
+        margin: 15px;
+        background:  {
+          image: url('');
+          repeat: no-repeat;
+        }
+
+        @include breakpoint(sm) {
+          position: inherit;
+        }
+      }
+
+      .header-extra {
+        float: right;
+        width: 100%;
+        text-align: right;
+
+        @include breakpoint(sm) {
+          width: 50%;
+        }
+      }
+    }
+
+    .navbar {
+      margin: 0;
+      padding: 0;
+
+      .menu {
+        position: absolute;
+        top: -1000px;
+        float: left;
+        width: 100%;
+        margin: 0;
+        margin-top: 35px;
+        padding: 0;
+        list-style: none;
+        background-color: color(greyscale, white);
+
+        @include transition-timing-function(cubic-bezier(0, 1, 0.5, 1));
+        @include transition-delay(0.5s);
+        @include transition-property(all);
+        @include shadow(2);
+        @include breakpoint(sm) {
+          position: static;
+          top: 0;
+          width: auto;
+          margin: 0;
+          background: transparent;
+
+          @include box-shadow(none);
+        }
+
+        li {
+          display: block;
+          float: none;
+          margin: 15px 0;
+
+          @include breakpoint(sm) {
+            display: inline-block;
+            float: left;
+            margin: 0 15px;
+          }
+
+          &:first-child {
+            margin: 0 15px;
+
+            @include breakpoint(sm) {
+              margin: 0 15px 0 0;
+            }
+          }
+        }
+      }
+
+      //Link Styles
+      a,
+      span {
+        margin: 5px;
+        padding: 15px 10px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        letter-spacing: 5px;
+        color: color(greyscale, black);
+        font-family: $font-heading;
+
+        @include font-size(21px);
+        @include breakpoint(sm) {
+          color: color(greyscale, white);
+        }
+
+        &:hover {
+          color: color(brand, secondary);
+          background-color: color(greyscale, white);
+
+          @include breakpoint(sm) {
+            background-color: transparent;
+          }
+        }
+      }
+
+      //Handles position of nav display on mobile
+      #drop:checked +ul {
+        top: 115px;
+      }
+    }
+
+    //Styles/Animates Toggle
+    #drop {
+      display: none;
+    }
+
+    .nav-toggle {
+      position: absolute;
+      z-index: 10;
+      top: 15px;
+      right: 15px;
+      display: block;
+      float: right;
+      width: 35px;
+      height: 35px;
+      margin: 15px;
+      padding: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      color: color(greyscale, white);
+      border: 0;
+      border-radius: 5px;
+      background-color: color(brand, primary);
+
+      @include font-size(17px);
+      @include breakpoint(sm) {
+        display: none;
+      }
+
+      &:hover {
+        background-color: darken(color(brand, primary), 15%);
+      }
+
+      .pill {
+        top: 50%;
+
+        @include transform(translateY(-50%));
+      }
+
+      .pill,
+      .pill:before,
+      .pill:after {
+        position: absolute;
+        display: block;
+        width: 35px;
+        height: 5px;
+        margin: 0;
+        padding: 0;
+        content: '';
+        cursor: pointer;
+        border-radius: 1px;
+        background: color(greyscale, white);
+
+        @include transition(all 500ms ease-in-out);
+
+        &:hover {
+          background: color(greyscale, white) !important;
+        }
+      }
+
+      .pill:before {
+        top: -10px;
+      }
+
+      .pill:after {
+        bottom: -10px;
+      }
+    }
+
+    .nav-toggle.active {
+      .pill {
+        background-color: transparent;
+
+        &:before {
+          top: 0;
+
+          @include transform(rotate(45deg));
+        }
+
+        &:after {
+          top: 0;
+
+          @include transform(rotate(-45deg));
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,80 @@
+// sass-lint:disable no-qualifying-elements force-element-nesting force-pseudo-nesting force-attribute-nesting
+
+// Buttons
+// ==========================================================================
+
+// Default styling for btn class
+@include run-debug-start((framework, infra, typography), ■ Buttons, get('buttons'));
+@if get('buttons, active') == true {
+
+  .btn {
+    display: inline-block;
+    margin: 5px;
+    padding: 6px 12px;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    color: color(greyscale, white); // sass-lint:disable-line no-color-keywords
+    border: 0 {
+      radius: 0;
+    }
+    background-image: none;
+    font: {
+      weight: 600;
+      family: font-family(heading);
+    }
+    line-height: 1.42857143;
+
+    @extend .transition;
+    @include font-size(14px);
+
+    &.active.focus,
+    &.active:focus,
+    &.focus,
+    &:active.focus,
+    &:active:focus,
+    &:focus {
+      outline: none;
+    }
+  }
+  @include run-debug-start((framework, infra, typography), ■ Buttons Base Class Creation, get('infra, button-create'));
+  @if infra-value(button-create) == true {
+    $buttons: get('buttons, types');
+
+    @each $key in map-keys($buttons) {
+      .btn-#{$key} {
+        @include create-btn($key);
+      }
+    }
+  }
+  @include run-debug-end((framework, infra, typography), ■ Buttons Base Class Creation);
+
+  // Button Sizes
+
+  .btn-xl {
+    padding: 25px 60px;
+
+    @include font-size(36px);
+  }
+
+  .btn-lg {
+    padding: 25px 40px;
+
+    @include font-size(30px);
+  }
+
+  .btn-md {
+    padding: 20px 30px;
+
+    @include font-size(24px);
+  }
+
+  .btn-sm {
+    padding: 10px 15px;
+
+    @include font-size(18px);
+  }
+}
+
+@include run-debug-end((framework, infra, typography), ■ Buttons);

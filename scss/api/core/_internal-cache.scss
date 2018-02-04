@@ -1,0 +1,66 @@
+
+// Internal caching - WARNING this can make scss very slow to compile
+
+//Super Private Var
+$__a__cache-enabled: true !default;
+$__a__map-cache: () !default;
+
+// Internal caching API
+// ==========================================================================
+
+@function cache-get($key) {
+  @if $debug {
+    @debug('cache get #{$key} as');
+    @debug(map-get($__a__map-cache, $key));
+  }
+
+  @return map-get($__a__map-cache, $key);
+}
+
+@function cache-set($key, $value) {
+  $__a__map-cache: map-merge($__a__map-cache, ($key: $value)) !global;
+
+  @if $debug {
+    @debug('cache set #{$key} to');
+    @debug($value);
+  }
+
+  @return $__a__map-cache;
+}
+
+/// Clears the internal cache. If $key is supplied only that key is cleared
+/// Returned the new state of the cache
+/// @param $key {String} - an optional key to clear
+/// @return {Map}
+@function cache-clean($key: null) {
+  @if $key {
+    $__a__map-cache: map-merge($__a__map-cache, ($key: null)) !global;
+  } @else {
+    $__a__map-cache: () !global;
+  }
+
+  @return $__a__map-cache;
+}
+
+
+/// Returns whether the internal cache is enabled or not
+/// @return {Bool} true if the cache is enabled, otherwise false
+@function cache-status() {
+  @return $__a__cache-enabled;
+}
+
+
+/// Disables the internal cache
+/// @return {Bool} true if the cache is enabled, otherwise false
+@function cache-disable() {
+  $__a__cache-enabled: false !global;
+  @return cache-status();
+}
+
+
+/// Disables the internal cache
+/// @return {Bool} true if the cache is enabled, otherwise false
+@function cache-enable() {
+  $__a__cache-enabled: true !global;
+  @return cache-status();
+}

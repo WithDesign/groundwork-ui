@@ -1,0 +1,26 @@
+
+// Three Column Footer
+// ==========================================================================
+
+@if template-active(footer, col-3) == true {
+  .three-column {
+
+    .sec-1 {
+      @include grid-column(xs, 4);
+      @include flex-column(sm);
+      @include column-base();
+    }
+
+    .sec-2 {
+      @include grid-column(xs, 4);
+      @include flex-column(sm);
+      @include column-base();
+    }
+
+    .sec-3 {
+      @include grid-column(xs, 4);
+      @include flex-column(sm);
+      @include column-base();
+    }
+  }
+}

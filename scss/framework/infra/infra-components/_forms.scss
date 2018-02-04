@@ -1,0 +1,253 @@
+// sass-lint:disable force-pseudo-nesting force-element-nesting
+
+// Form Styles
+// ==========================================================================
+
+// Default Form Group
+// ===============================
+@include run-debug-start((framework, infra, components), ■ Form Group Default, get('infra, form-group-default'));
+@if infra-value(form-group-default) == true {
+
+  $form-group-color: #66afe9 !default;
+
+  .form-group {
+    margin-bottom: 15px;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-control {
+      display: block;
+      width: calc(100% - 12px);
+      height: 34px;
+      padding: 6px 0;
+      color: darken(color(greyscale, grey), 35%);
+      border: 1px solid color(greyscale, grey) {
+        radius: 4px;
+      }
+      background:  {
+        color: color(greyscale, white);
+        image: none;
+      }
+      font-size: 14px;
+      line-height: 1.42857143;
+
+      @extend .transition;
+      @include box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075));
+
+      &:focus {
+        border-color: $form-group-color;
+        outline: 0;
+
+        @include box-shadow(0 0 8px rgba($form-group-color, 0.6));
+      }
+    }
+  }
+
+  .form-control::-moz-placeholder {
+    opacity: 1;
+    color: darken(color(greyscale, grey), 20%);
+  }
+
+  .form-control:-ms-input-placeholder {
+    color: darken(color(greyscale, grey), 20%);
+  }
+
+  .form-control::-webkit-input-placeholder {
+    color: darken(color(greyscale, grey), 20%);
+  }
+
+  .form-control::-ms-expand {
+    border: 0;
+    background-color: transparent;
+  }
+
+  select {
+    &.form-control {
+      width: 100%;
+      height: 48px;
+    }
+  }
+}
+@include run-debug-end((framework, infra, components), ■ Form Group Default);
+
+// Fancy Form Group
+// ===============================
+@include run-debug-start((framework, infra, components), ■ Form Group Fancy, get('infra, form-group-fancy'));
+@if infra-value(form-group-fancy) == true {
+
+  .form-group-fancy {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 15px 0 0;
+    padding-top: 40px;
+    vertical-align: top;
+
+    .input-field {
+      position: relative;
+      z-index: 100;
+      display: block;
+      float: right;
+      width: 100%;
+      height: 45px;
+      padding: 10px;
+      opacity: 0;
+      color: color(brand, success);
+      border: 0 {
+        radius: 0;
+      }
+      outline: none;
+      background: lighten(color(brand, success), 30%);
+      font-weight: 400;
+
+      -webkit-appearance: none;
+      @include font-size(20px);
+    }
+
+    .input-label {
+      position: absolute;
+      z-index: 9;
+      bottom: 0;
+      display: inline-block;
+      float: right;
+      width: 100%;
+      padding: 0 0.5em;
+      text-align: left;
+      pointer-events: none;
+      color: darken(color(greyscale, grey), 20%);
+      background-color: color(greyscale, light-grey);
+      font-weight: bold;
+
+      -webkit-font-smoothing: antialiased;
+      @include font-size(20px);
+
+
+      &::before {
+        position: absolute;
+        z-index: 9;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 42px;
+        content: '';
+        border-top: 4px solid darken(color(greyscale, grey), 25%);
+        background: color(greyscale, white);
+
+        @include transition-timing-function(cubic-bezier(0.7, 0, 0.3, 1));
+        @include transition(transform 0.4s);
+        @include transform(translate3d(0, -3px, 0));
+      }
+    }
+
+    .input-label-content {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding: 0.5em 0;
+
+      @include transition-timing-function(cubic-bezier(0.7, 0, 0.3, 1));
+      @include transform-origin(0 100%);
+      @include transition(transform 0.4s, color 0.4s);
+    }
+
+    .input-field:focus,
+    .input-field:valid,
+    .input-filled .input-field {
+      cursor: text;
+      opacity: 1;
+
+      @include transition(opacity 0s 0.4s);
+    }
+
+    .input-field:focus + .input-label::before,
+    .input-filled .input-label::before,
+    .input-field:valid + .input-label::before {
+      top: 135%;
+      border-top: 4px solid color(brand, success);
+
+      @include transition-delay(0.05s)
+      @include transform(translate3d(0, -3.3em, 0));
+    }
+
+    .input-field:focus + .input-label .input-label-content,
+    .input-field:valid + .input-label .input-label-content,
+    .input-filled .input-label-content {
+      color: color(brand, success);
+
+      @include transform(translate3d(0, -48px, 0) scale3d(0.81, 0.81, 1));
+    }
+
+    .green-chev {
+      &::before {
+        color: color(brand, success) !important;
+      }
+    }
+
+    .form-group-fancy-select {
+      position: relative;
+
+
+      &::before {
+        position: absolute;
+        z-index: 2;
+        top: 15px;
+        right: 15px;
+        padding-right: 0.5em;
+        content: '\f078';
+        text-decoration: inherit;
+        color: darken(color(greyscale, grey), 20%);
+        font:  {
+          weight: normal;
+          style: normal;
+          family: FontAwesome;;
+        }
+
+        @include font-size(18px);
+      }
+
+      select {
+        position: relative;
+        z-index: 1;
+        display: block;
+        height: 50px;
+        margin: 36px auto 0;
+        padding: 0 10px;
+        color: darken(color(greyscale, grey), 20%);
+        border:  {
+          top: 3px solid darken(color(greyscale, grey), 20%);
+          right: 0 solid transparent;
+          bottom: 3px solid darken(color(greyscale, grey), 20%);
+          left: 0 solid transparent;
+        }
+        border-radius: 0;
+        outline: 0;
+        background-color: color(greyscale, light-grey);
+        font-family: font-family(heading);
+        -webkit-appearance: none;
+
+        @include font-size(18px);
+        @include calc(width, 98%, '100% - 30px');
+
+        &.selected {
+          color: color(brand, success);
+          border:  {
+            top: 3px solid color(brand, success);
+            right: 0 solid transparent;
+            bottom: 3px solid color(brand, success);
+            left: 0 solid transparent;
+          }
+          background: color(greyscale, white) {  // sass-lint:disable-line trailing-semicolon
+            color: lighten(color(brand, success), 30%);
+          }
+        }
+      }
+    }
+  }
+}
+@include run-debug-end((framework, infra, components), ■ Form Group Fancy);

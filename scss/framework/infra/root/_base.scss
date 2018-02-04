@@ -1,0 +1,21 @@
+@include run-debug-start((framework, infra, root), ■ Normalize, get('normalize'));
+@include normalize();
+@include run-debug-end((framework, infra, root), ■ Normalize);
+// Element Styles
+// ==========================================================================
+@include run-debug-start((framework, infra, root), ■ Base Root);
+body {
+  color: color(greyscale, dark-grey);
+  background-color: color(greyscale, light-grey);
+  font-family: font-family(primary);
+  line-height: heading(default, line-height);
+
+  @include font-size(heading(default, font-size));
+}
+
+hr {
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid color(greyscale, light-grey);
+}
+@include run-debug-end((framework, infra, root), ■ Base Root);

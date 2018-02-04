@@ -1,0 +1,109 @@
+////
+/// Class Creators
+/// @group class-creator
+////
+
+@include run-debug-start((framework, util, class-creators), '✪ Creator:infra-table');
+
+/// @name Infrastructure Table
+/// Creates table classes
+/// @param {key} $generate [default] - A key on what to create -> default, base, responsive, striped
+/// @outputs Table classes
+
+@mixin infra-table($generate: default) {
+
+  @if $generate == help {
+    @include INFO('generate: \A avalible keys: default -> All tabel styles, base: basic table styles on element, respoonsive: imports resonsive table style, striped: imports styles for striped table \A NOTE:: keys can be added togther in a list to import EX: `striped responsive`'); // sass-lint:disable-line mixin-name-format
+  }
+
+  @if index($generate, base) or $generate == default {
+    // Default Table Styles
+    // ==================================
+
+    table,
+    thead,
+    tbody,
+    tfoot,
+    tr,
+    td,
+    th {
+      margin: auto;
+      padding: 10px;
+      text-align: center;
+    }
+
+    table {
+      overflow-y: scroll;
+      background: color(greyscale, white); // sass-lint:disable-line no-color-keywords
+    }
+  }
+
+  @if index($generate, responsive) or $generate == default {
+
+    // Responsive table
+    // ==================================
+
+    .table-responsive {
+      overflow-x: auto;
+      min-height: 0.01%;
+
+      @include breakpoint(xs) {
+        display: block;
+        overflow-y: hidden;
+        width: 100%;
+        margin-bottom: 10px;
+
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+      }
+    }
+  }
+
+  @if index($generate, striped) or $generate == default {
+
+    // Striped table
+    // ==================================
+    %striped-table-extend {
+      margin: auto;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .table-striped {
+
+      tbody,
+      tfoot {
+        border: 1px solid color(greyscale, grey); // sass-lint:disable-line no-color-keywords
+        @extend %striped-table-extend;
+
+        tr,
+        td,
+        th {
+          border: 1px solid color(greyscale, grey); // sass-lint:disable-line no-color-keywords
+          @extend %striped-table-extend;
+        }
+      }
+
+      tr {
+        &:nth-child(odd) {
+          background-color: lighten(color(greyscale, grey), 10%); // sass-lint:disable-line no-color-keywords
+        }
+      }
+
+      thead {
+        border: 1px solid darken(color(greyscale, grey), 15%); // sass-lint:disable-line no-color-keywords
+        border-bottom: 3px solid darken(color(greyscale, grey), 15%); // sass-lint:disable-line no-color-keywords
+        @extend %striped-table-extend;
+
+        tr,
+        th {
+          color: color(brand, primary);
+          border: 1px solid darken(color(greyscale, grey), 15%); // sass-lint:disable-line no-color-keywords
+          background-color: color(greyscale, grey); // sass-lint:disable-line no-color-keywords
+          @extend %striped-table-extend;
+        }
+      }
+    }
+  }
+}
+
+@include run-debug-end((framework, util, class-creators), '✪ Creator:infra-table');

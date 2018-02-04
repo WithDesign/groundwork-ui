@@ -1,0 +1,5 @@
+@include run-debug-start((framework, components, template), ❖ Footer Module, get('template, footer'));
+@import 'footer-one-col';
+@import 'footer-three-col';
+@import 'footer-two-col';
+@include run-debug-end((framework, components, template), ❖ Footer Module);

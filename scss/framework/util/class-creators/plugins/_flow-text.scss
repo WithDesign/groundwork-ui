@@ -1,0 +1,28 @@
+////
+/// Class Creators
+/// @group class-creator
+////
+
+@include run-debug-start((framework, util, class-creators), '✪ Creator:flow-text');
+
+/// @name Flow Text
+/// Can be attached to toggle for bigger text
+/// @param {key} $range [$lg - $sm] - what range you would like
+/// @param {list} $intervals [20] - how many steps should it have when being responsive
+/// @outputs flow class properties
+
+@mixin flow-text($range: breakpoint-value(lg) - breakpoint-value(sm), $intervals: 20) {
+  $interval-size: $range / $intervals;
+
+  font-weight: 400;
+  $i: 10;
+  @while $i <= $intervals {
+    @media only screen and (min-width: 360 + ($i * $interval-size)) {
+      font-size: 1.2rem * (1 + (0.02 * $i));
+      line-height: 2rem * (1 + (0.02 * $i));
+    }
+    $i: $i + 1;
+  }
+}
+
+@include run-debug-end((framework, util, class-creators), '✪ Creator:flow-text');

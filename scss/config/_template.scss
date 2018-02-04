@@ -1,0 +1,36 @@
+// Activate Base Variables
+// ==========================================================================
+
+/// @name Active Template Pieces
+/// @group groundwork-config
+/// @access private
+/// @type Map
+
+$template: (
+  template: (
+    header: (
+      inline-header: false,
+      row-header: false,
+      no-links-header: false,
+      sidebar-header: false,
+    ),
+    footer: (
+      full: false,
+      col-2: false,
+      col-3: false,
+    ),
+    layout: (
+      conatin-1-col: false,
+      full-1-col: false,
+      contain-3-col: false,
+      full-3-col: false,
+      contain-2-col-sb-right: false,
+      contain-2-col-sb-left: false,
+      full-2-col-sb-right: false,
+      full-2-col-sb-left: false,
+      conatin-3-col-sb-inline: false,
+      conatin-2-col-sb-inline-left: false,
+      conatin-2-col-sb-inline-right: false
+    )
+  )
+);

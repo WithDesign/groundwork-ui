@@ -1,0 +1,44 @@
+////
+/// Assets Path
+/// @group tools
+////
+
+@include run-debug-start((framework, util, tools), '✎ Tool: Asset Path Helper');
+
+/// @name Base Asset Path
+/// [Base path for assets (fonts, images...), should not include trailing slash]
+/// @access public
+/// @type string
+
+$asset-base-path: '..' !default;
+
+/// @name Base Asset Path
+/// A function to get the proper asset path for any asset
+/// @param {key} $type - Type of asset
+/// @param {list} $file - What file to call
+/// @return {string} url
+
+@function asset($type, $file) {
+  @return url($asset-base-path + '/' + $type + '/' + $file);
+}
+
+/// @name Image Asset Path
+/// A function to get the proper asset path for images
+/// @param {key} $folder - What folder its in
+/// @param {list} $file - What file to call
+/// @return {string} image url
+
+@function image($folder, $file) {
+  @return asset($folder, $file);
+}
+
+/// @name Font Asset Path
+/// A function to get the proper asset path for fonts
+/// @param {list} $file - What font to get
+/// @return {string} font url
+
+@function font($file) {
+  @return asset('fonts', $file);
+}
+
+@include run-debug-end((framework, util, tools), '✎ Tool: Asset Path Helper');

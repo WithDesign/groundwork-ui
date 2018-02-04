@@ -1,0 +1,152 @@
+// No Nav Links
+// ==========================================================================
+
+@if template-active(header, no-links-header) == true {
+  header.base-head { // sass-lint:disable-line no-qualifying-elements force-element-nesting
+    position: relative;
+    z-index: 1000;
+
+    .menu-wrapper {
+      display: none !important;
+
+      .text {
+        display: none;
+      }
+    }
+
+    //controls color bg
+    .nav-wrapper {
+      width: 100%;
+      background-color: color(greyscale, dark-grey);
+
+      @include shadow(2);
+    }
+
+    .nav-style {
+      @extend .no-padding;
+    }
+
+    .menu-wrapper {
+      @extend .container;
+      @extend .no-padding;
+    }
+
+    //controls color of top navigation
+    .logo-wrapper {
+      background-color: color(greyscale, light-grey);
+    }
+
+    #logo {
+      @extend .container;
+
+      img {
+        position: relative;
+        z-index: 10;
+        display: block;
+        float: left;
+        margin: 15px;
+        background:  {
+          image: url('');
+          repeat: no-repeat;
+        }
+
+        @include breakpoint(sm) {
+          position: inherit;
+        }
+      }
+
+      .header-extra {
+        float: right;
+        width: 100%;
+        text-align: right;
+
+        @include breakpoint(sm) {
+          width: 50%;
+        }
+      }
+    }
+
+    .navbar {
+      margin: 0;
+      padding: 0;
+
+      .menu {
+        position: absolute;
+        top: -1000px;
+        float: left;
+        width: 100%;
+        margin: 35px 0 0;
+        padding: 0;
+        list-style: none;
+        background-color: color(greyscale, white);
+
+        @include transition-timing-function(cubic-bezier(0, 1, 0.5, 1));
+        @include transition-delay(0.5s);
+        @include transition-property(all);
+        @include shadow(2);
+        @include breakpoint(sm) {
+          position: static;
+          top: 0;
+          width: auto;
+          margin: 0;
+          background: transparent;
+
+          @include box-shadow(none);
+        }
+
+        li {
+          display: block;
+          float: none;
+          margin: 15px 0;
+
+          @include breakpoint(sm) {
+            display: inline-block;
+            float: left;
+            margin: 0 15px;
+          }
+
+          &:first-child {
+            margin: 0 15px;
+
+            @include breakpoint(sm) {
+              margin: 0 15px 0 0;
+            }
+          }
+        }
+      }
+
+      //Link Styles
+      a {
+        margin: 5px;
+        padding: 15px 10px;
+        cursor: pointer;
+        letter-spacing: 5px;
+        color: color(greyscale, black);
+        font-family: $font-heading;
+
+        text:  {
+          align: center;
+          decoration: none;
+        }
+        @include font-size(21px);
+        @include breakpoint(sm) {
+          color: color(greyscale, white);
+        }
+
+        &:hover {
+          color: color(brand, secondary);
+          background-color: color(greyscale, white);
+
+          @include breakpoint(sm) {
+            background-color: transparent;
+          }
+        }
+      }
+
+      //Styles/Animates Toggle
+      #drop {
+        display: none;
+      }
+    }
+  }
+}

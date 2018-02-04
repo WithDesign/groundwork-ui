@@ -1,0 +1,31 @@
+////
+/// Class Creators
+/// @group class-creator
+////
+
+@include run-debug-start((framework, util, class-creators), '✪ Creator:infra-colors');
+
+/// @name Infrastructure Background/Text Colors
+/// Creates basic color styles
+/// @param {list} $color-lists [($brand-colors, $cta-colors, color(greyscale, grey)-colors, $social-colors)] - A list of color maps.
+/// @outputs color classes
+
+@mixin infra-colors($color-lists: get('colors')) {
+  $key-list: map-keys($color-lists);
+  @each $key in $key-list {
+    $lists: map-get($color-lists, $key);
+    @each $list in $lists {
+      $label: nth($list, 1);
+      $color: nth($list, 2);
+
+      .text-#{$label} {
+        color: $color;
+      }
+
+      .bg-#{$label} {
+        background-color: $color;
+      }
+    }
+  }
+}
+@include run-debug-end((framework, util, class-creators), '✪ Creator:infra-colors');

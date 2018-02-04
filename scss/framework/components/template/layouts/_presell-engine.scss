@@ -1,0 +1,680 @@
+//  1 column with title area contained in container
+// ===================
+@include run-debug-start((framework, components, template), ❖ Presell Engine, get('template, layout'));
+
+@if template-active(layout, conatin-1-col-layout) == true {
+  .content-wrapper {
+    @extend .container;
+    @include breakpoint(sm) {
+      padding: 0;
+    }
+
+    .content {
+      @include grid-row();
+
+      .title-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @extend .no-padding;
+      }
+
+      .title-side-1,
+      .title-side-2 {
+        display: none;
+      }
+
+      .wrapper {
+        width: 100%;
+        padding: 0 15px;
+
+        @include breakpoint(sm) {
+          padding: 0;
+        }
+      }
+
+      .wrapper-row {
+        @include grid-row();
+      }
+
+      .sidebar-1-wrapper {
+        display: none;
+      }
+
+      .sidebar-2-wrapper {
+        display: none;
+      }
+
+      .main-content-wrapper {
+        @include column-base();
+        @include flex-column(sm);
+        @include grid-column(xs, 12);
+      }
+    }
+  }
+}
+
+// 1 column with title area contained in container
+// ===================
+@if template-active(layout, full-1-col-layout) == true {
+  .content-wrapper {
+    @extend .container-fluid;
+    @include breakpoint(sm) {
+      padding: 0;
+    }
+
+    .content {
+      @include grid-row();
+
+      .title-wrapper {
+        @include grid-column(xs, 12);
+        @extend .no-padding;
+      }
+
+      .title-side-1,
+      .title-side-2 {
+        display: none;
+      }
+
+      .wrapper {
+        width: 100%;
+        padding: 0 15px;
+
+        @include breakpoint(sm) {
+          padding: 0;
+        }
+      }
+
+      .wrapper-row {
+        @include grid-row();
+      }
+
+      .sidebar-1-wrapper {
+        display: none;
+      }
+
+      .sidebar-2-wrapper {
+        display: none;
+      }
+
+      .main-content-wrapper {
+        @include column-base();
+        @include flex-column(sm);
+        @include grid-column(xs, 12);
+      }
+    }
+  }
+}
+
+
+//  3 column with title area contained in container
+// ===================
+
+@if template-active(layout, contain-3-col-layout) == true {
+  .content-wrapper {
+    @extend .container;
+    @include breakpoint(sm) {
+      padding: 0;
+    }
+
+    .content {
+      @include grid-row();
+
+      .title-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @extend .no-padding;
+      }
+
+      .title-side-1,
+      .title-side-2 {
+        display: none;
+      }
+
+      .wrapper {
+        width: 100%;
+        padding: 0 15px;
+
+        @include breakpoint(sm) {
+          padding: 0;
+        }
+      }
+
+      .wrapper-row {
+        @include grid-row();
+      }
+
+      .sidebar-1-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @include grid-column(sm, 3);
+        @extend .last-xs;
+        @extend .first-sm;
+      }
+
+      .sidebar-2-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @include grid-column(sm, 3);
+      }
+
+      .main-content-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @include flex-column(sm);
+      }
+    }
+  }
+}
+
+// 3 column with title area full width
+// ===================
+
+@if template-active(layout, full-3-col-layout) == true {
+  .content-wrapper {
+    @extend .container-fluid;
+
+    .content {
+      @include grid-row();
+
+      .title-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @extend .no-padding;
+      }
+
+      .wrapper {
+        width: 100%;
+        padding: 0 15px;
+
+        @extend .center;
+        @include breakpoint(sm) {
+          max-width: 71rem;
+        }
+      }
+
+      .wrapper-row {
+        @include grid-row();
+      }
+
+      .sidebar-1-wrapper {
+        @include column-base();
+        @include grid-column(sm, 3);
+        @include grid-column(xs, 12);
+        @extend .last-xs;
+        @extend .first-sm;
+      }
+
+      .sidebar-2-wrapper {
+        @include column-base();
+        @include grid-column(sm, 3);
+        @include grid-column(xs, 12);
+      }
+
+      .main-content-wrapper {
+        @include column-base();
+        @extend .col-sm;
+        @include grid-column(xs, 12);
+      }
+
+      .title-side-1,
+      .title-side-2 {
+        display: none;
+      }
+    }
+  }
+}
+
+// 2 column, sidebar right, title area contained in container
+// ===================
+@if template-active(layout, contain-2-col-sb-right-layout) == true {
+  .content-wrapper {
+    @extend .container;
+    @include breakpoint(sm) {
+      padding: 0;
+    }
+
+    .content {
+      @include grid-row();
+
+      .title-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @extend .no-padding;
+      }
+
+      .title-side-1,
+      .title-side-2 {
+        display: none;
+      }
+
+      .wrapper {
+        width: 100%;
+        padding: 0 15px;
+
+        @include breakpoint(sm) {
+          padding: 0;
+        }
+      }
+
+      .wrapper-row {
+        @include grid-row();
+      }
+
+      .sidebar-1-wrapper {
+        @include column-base();
+        @include grid-column(sm, 3);
+        @include grid-column(xs, 12);
+        @extend .last-xs;
+      }
+
+      .sidebar-2-wrapper {
+        display: none;
+      }
+
+      .main-content-wrapper {
+        @include column-base();
+        @include flex-column(sm);
+        @include grid-column(xs, 12);
+      }
+    }
+  }
+}
+
+// 2 column, sidebar left, title area contained in container
+// ===================
+
+@if template-active(layout, contain-2-col-sb-left-layout) == true {
+  .content-wrapper {
+    @extend .container;
+    @include breakpoint(sm) {
+      padding: 0;
+    }
+
+    .content {
+      @include grid-row();
+
+      .title-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @extend .no-padding;
+      }
+
+      .title-side-1,
+      .title-side-2 {
+        display: none;
+      }
+
+      .wrapper {
+        width: 100%;
+        padding: 0 15px;
+
+        @extend .center;
+        @include breakpoint(sm) {
+          max-width: 71rem;
+        }
+      }
+
+      .wrapper-row {
+        @include grid-row();
+      }
+
+      .sidebar-1-wrapper {
+        @include column-base();
+        @include grid-column(sm, 3);
+        @include grid-column(xs, 12);
+        @extend .first-sm;
+        @extend .last-xs;
+      }
+
+      .sidebar-2-wrapper {
+        display: none;
+      }
+
+      .main-content-wrapper {
+        @include column-base();
+        @extend .col-sm;
+        @include grid-column(xs, 12);
+      }
+    }
+  }
+}
+
+// 2 column, sidebar right, title area full width
+// ===================
+@if template-active(layout, full-2-col-sb-right-layout) == true {
+  .content-wrapper {
+    @extend .container-fluid;
+    @include breakpoint(sm) {
+      padding: 0;
+    }
+
+    .content {
+      @include grid-row();
+
+      .title-wrapper {
+        padding: 0;
+
+        @include column-base();
+        @include grid-column(xs, 12);
+        @include breakpoint(sm) {
+          padding: 0 15px;
+        }
+      }
+
+      .title-side-1,
+      .title-side-2 {
+        display: none;
+      }
+
+      .wrapper {
+        width: 100%;
+        padding: 0 15px;
+
+        @extend .center;
+        @include breakpoint(sm) {
+          max-width: 71rem;
+          padding: 0 30px;
+        }
+        @include breakpoint(md) {
+          max-width: 71rem;
+        }
+      }
+
+      .wrapper-row {
+        @include grid-row();
+      }
+
+      .sidebar-1-wrapper {
+        @include grid-column(sm, 3);
+        @include grid-column(xs, 12);
+        @extend .last-xs;
+      }
+
+      .sidebar-2-wrapper {
+        display: none;
+      }
+
+      .main-content-wrapper {
+        @extend .col-sm;
+        @include grid-column(xs, 12);
+      }
+    }
+  }
+}
+
+
+//  2 column, sidebar left, title area full width
+// ===================
+@if template-active(layout, full-2-col-sb-left-layout) == true {
+  .content-wrapper {
+    @extend .container-fluid;
+    @include breakpoint(sm) {
+      padding: 0;
+    }
+
+    .content {
+      @include grid-row();
+
+      .title-wrapper {
+        padding: 0;
+
+        @include column-base();
+        @include grid-column(xs, 12);
+        @include breakpoint(sm) {
+          padding: 0 15px;
+        }
+      }
+
+      .title-side-1,
+      .title-side-2 {
+        display: none;
+      }
+
+      .wrapper {
+        width: 100%;
+        padding: 0 15px;
+
+        @extend .center;
+        @include breakpoint(sm) {
+          max-width: 71rem;
+          padding: 0 30px;
+        }
+        @include breakpoint(md) {
+          max-width: 71rem;
+        }
+      }
+
+      .wrapper-row {
+        @include grid-row();
+      }
+
+      .sidebar-1-wrapper {
+        @include column-base();
+        @include grid-column(sm, 3);
+        @include grid-column(xs, 12);
+        @extend .first-sm;
+        @extend .last-xs;
+      }
+
+      .sidebar-2-wrapper {
+        display: none;
+      }
+
+      .main-content-wrapper {
+        @include column-base();
+        @extend .col-sm;
+        @include grid-column(xs, 12);
+      }
+    }
+  }
+}
+
+//  3 column, sidebar inline with content
+// ===================
+
+@if template-active(layout, conatin-3-col-sb-inline) == true {
+  .content-wrapper {
+    @extend .container;
+    @include breakpoint(sm) {
+      padding: 0;
+    }
+
+    .content {
+      @include grid-row();
+
+      .title-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @extend .col-sm-6;
+        @include breakpoint(sm) {
+          padding: 0 15px;
+        }
+      }
+
+      .title-side-1,
+      .title-side-2 {
+        @extend .col-xs-3;
+      }
+
+      .wrapper {
+        width: 100%;
+        max-width: 71rem;
+        padding: 0 15px;
+      }
+
+      .wrapper-row {
+        @include grid-row();
+      }
+
+      .sidebar-1-wrapper {
+        @include column-base();
+        @include grid-column(sm, 3);
+        @include grid-column(xs, 12);
+        @extend .last-xs;
+        @extend .first-sm;
+      }
+
+      .sidebar-2-wrapper {
+        @include column-base();
+        @include grid-column(sm, 3);
+        @include grid-column(xs, 12);
+        @extend .last-xs;
+      }
+
+      .main-content-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @extend .col-sm-6;
+      }
+    }
+  }
+}
+
+// 2 column, sidebar inline with content aligned left
+// ===================
+
+@if template-active(layout, conatin-2-col-sb-inline-left) == true {
+  .content-wrapper {
+    @include column-base();
+    @extend .container;
+    @include breakpoint(sm) {
+      padding: 0;
+    }
+
+    .content {
+      @include grid-row();
+
+      .title-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @extend .col-sm-9;
+      }
+
+      .title-side-2 {
+        display: none;
+      }
+
+      .title-side-1 {
+        @include column-base();
+        @include grid-column(sm, 3);
+        @include grid-column(xs, 12);
+        @extend .first-sm;
+
+        @media (max-width: $sm) {
+          -ms-flex-order: 1;
+          -webkit-order: 1;
+          -webkit-box-ordinal-group: 2;
+          order: 1;
+        }
+      }
+
+      .wrapper {
+        width: 100%;
+        max-width: 71rem;
+        padding: 0 15px;
+      }
+
+      .wrapper-row {
+        @include grid-row();
+      }
+
+      .sidebar-1-wrapper {
+        @include column-base();
+        @include grid-column(sm, 3);
+        @include grid-column(xs, 12);
+        @extend .first-sm;
+        @extend .last-xs;
+        @include breakpoint(sm) {
+          order: 1;
+        }
+      }
+
+      .sidebar-2-wrapper {
+        display: none;
+      }
+
+      .main-content-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @extend .col-sm-9;
+        @include breakpoint(sm) {
+          order: 2;
+        }
+      }
+    }
+  }
+}
+
+//  2 column, sidebar inline with content aligned left
+// ===================
+
+@if template-active(layout, conatin-2-col-sb-inline-right) == true {
+  .content-wrapper {
+    @extend .container;
+    @include breakpoint(sm) {
+      padding: 0;
+    }
+
+    .content {
+      @include grid-row();
+
+      .title-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @extend .col-sm-9;
+        @extend .first-sm;
+      }
+
+      .title-side-2 {
+        display: none;
+      }
+
+      .title-side-1 {
+        @include grid-column(sm, 3);
+        @include column-base();
+        @include grid-column(xs, 12);
+
+        @media (max-width: $sm) {
+          -ms-flex-order: 1;
+          -webkit-order: 1;
+          -webkit-box-ordinal-group: 2;
+          order: 1;
+        }
+      }
+
+      .wrapper {
+        width: 100%;
+        max-width: 71rem;
+        padding: 0 15px;
+      }
+
+      .wrapper-row {
+        @include grid-row();
+      }
+
+      .sidebar-1-wrapper {
+        @include column-base();
+        @include grid-column(sm, 3);
+        @include grid-column(xs, 12);
+        @extend .last-xs;
+        @include breakpoint(sm) {
+          order: 2;
+        }
+      }
+
+      .sidebar-2-wrapper {
+        display: none;
+      }
+
+      .main-content-wrapper {
+        @include column-base();
+        @include grid-column(xs, 12);
+        @extend .col-sm-9;
+        @include breakpoint(sm) {
+          order: 1;
+        }
+      }
+    }
+  }
+}
+@include run-debug-end((framework, components, template), ❖ Presell Engine);

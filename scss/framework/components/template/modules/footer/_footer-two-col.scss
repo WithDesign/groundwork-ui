@@ -1,0 +1,22 @@
+
+// Two Column Footer
+// ==========================================================================
+
+@if template-active(footer, col-2) == true {
+  .two-column {
+
+    .sec-1 {
+      @include flex-column(sm);
+      @include column-base();
+    }
+
+    .sec-2 {
+      @include flex-column(sm);
+      @include column-base();
+    }
+
+    .sec-3 {
+      display: none;
+    }
+  }
+}

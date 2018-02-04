@@ -1,0 +1,43 @@
+////
+/// Class Creators
+/// @group class-creator
+////
+
+@include run-debug-start((framework, util, class-creators), '✪ Creator:infra-shadows', get('shadow'));
+/// @name Infrastructure Shadow
+/// Creates basic shadow classes
+/// @param {key} $activate [true] - when being included set to false to stop classes for being imported
+/// @outputs Shadow classes
+
+@mixin infra-shadow($activate: true) {
+  @if $activate == true {
+    .shadow {
+      @include box-shadow(0 0 32px 3px rgba(0, 0, 0, 0.5));
+    }
+
+    .shadow-1 {
+      @include shadow(1);
+    }
+
+    .shadow-2 {
+      @include shadow(2);
+    }
+
+    .shadow-3 {
+      @include shadow(3);
+    }
+
+    .shadow-4 {
+      @include shadow(4);
+    }
+
+    .inner-shadow {
+      @include inset-box-shadow(0 0 32px 3px rgba(0, 0, 0, 0.5));
+    }
+
+    .text-shadow {
+      @include text-shadow(1px 1px 6px rgba(0, 0, 0, 0.5));
+    }
+  }
+}
+@include run-debug-end((framework, util, class-creators), '✪ Creator:infra-shadows');

@@ -1,0 +1,61 @@
+// sass-lint:disable function-name-format
+
+@include run-debug-start((framework, util, tools), '✎ Tool: Positioning Helpers');
+
+////
+/// Positioning
+/// @group tools
+////
+
+// Positioning
+// ==========================================================================
+
+/// @name Center Block
+/// Imports centering styles
+/// @outputs properties to center element
+
+@mixin center-block {
+  display: block;
+  margin:  {
+    right: auto;
+    left: auto;
+  }
+}
+
+/// @name Absolute Position
+/// Easily create absolute position
+/// @param {intiger} $top [auto]
+/// @param {intiger} $right [auto]
+/// @param {intiger} $bottom [auto]
+/// @param {intiger} $left [auto]
+/// @outputs position properties
+
+@mixin abs-pos($top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+/// @name Vertical Center
+/// Center Element Vertically
+/// @outputs properties to center element vertically
+
+@mixin vert-center-pos($element-height, $position-property: absolute) {
+  $height: $element-height / 2;
+  position: #{$position-property};
+  @include calc(top, 50%, '50% - #{$height}');
+}
+
+/// @name Horizontal Center
+/// Center Element Horizontally
+/// @outputs properties to center element horizontally
+
+@mixin horz-center-pos($element-width, $position-property: absolute) {
+  $width: $element-width / 2;
+  position: #{$position-property};
+  @include calc(left, 50%, '50% - #{$width}');
+}
+
+@include run-debug-end((framework, util, tools), '✎ Tool: Positioning Helpers');

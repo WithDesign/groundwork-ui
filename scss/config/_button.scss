@@ -1,0 +1,124 @@
+// sass-lint:disable no-color-keywords
+// Button Styles
+// ==========================================================================
+
+/// @name Button Settings
+/// @group groundwork-config
+/// @access private
+/// @type Map
+
+$buttons: (
+  buttons: (
+    active: true,
+    types: (
+      default: (
+        background: brand default,
+        padding: 10px 25px,
+        border: 0,
+        border-radius: 0,
+        color-border: brand default,
+        color: greyscale white,
+        shadow: none,
+        hover-border: 0,
+        hover-color: darken brand default,
+        hover-shadow: none
+      ),
+      primary: (
+        background: brand primary,
+        padding: 10px 25px,
+        border: 0,
+        border-radius: 0,
+        color-border: brand primary,
+        color: greyscale white,
+        shadow: none,
+        hover-border: 0,
+        hover-color: greyscale white,
+        hover-shadow: none
+      ),
+      success: (
+        background: brand success,
+        padding: 10px 25px,
+        border: 0,
+        border-radius: 0,
+        color-border: brand success,
+        color: greyscale white,
+        shadow: none,
+        hover-border: 0,
+        hover-color: greyscale white,
+        hover-shadow: none
+      ),
+      info: (
+        background: brand info,
+        padding: 10px 25px,
+        border: 0,
+        border-radius: 0,
+        color-border: brand info,
+        color: greyscale white,
+        shadow: none,
+        hover-border: 0,
+        hover-color: greyscale white,
+        hover-shadow: none
+      ),
+      warning: (
+        background: brand warning,
+        padding: 10px 25px,
+        border: 0,
+        border-radius: 0,
+        color-border: brand warning,
+        color: greyscale white,
+        shadow: none,
+        hover-border: 0,
+        hover-color: greyscale white,
+        hover-shadow: none
+      ),
+      danger: (
+        background: brand danger,
+        padding: 10px 25px,
+        border: 0,
+        border-radius: 0,
+        color-border: brand danger,
+        color: greyscale white,
+        shadow: none,
+        hover-border: 0,
+        hover-color: greyscale white,
+        hover-shadow: none
+      ),
+      cta-1: (
+        background: cta cta-1,
+        padding: 10px 25px,
+        border: 0,
+        border-radius: 0,
+        color-border: cta cta-1,
+        color: greyscale white,
+        shadow: none,
+        hover-border: 0,
+        hover-color: greyscale white,
+        hover-shadow: none
+      ),
+      cta-2: (
+        background: cta cta-2,
+        padding: 10px 25px,
+        border: 0,
+        border-radius: 0,
+        color-border: cta cta-2,
+        color: greyscale white,
+        shadow: none,
+        hover-border: 0,
+        hover-color: greyscale white,
+        hover-shadow: none
+      ),
+      cta-3: (
+        background: cta cta-3,
+        padding: 10px 25px,
+        border: 0,
+        border-radius: 0,
+        color-border: cta cta-3,
+        color: greyscale white,
+        shadow: none,
+        hover-border: 0,
+        hover-color: greyscale white,
+        hover-shadow: none
+      )
+    )
+  )
+) !default;

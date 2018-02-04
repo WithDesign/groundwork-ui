@@ -1,0 +1,190 @@
+////
+/// Class Creators
+/// @group class-creator
+////
+
+@include run-debug-start((framework, util, class-creators), '✪ Creator:Tooltips');
+
+/// @name Border Triangle
+/// Creates a triangle out of border properties
+/// @group class-creator
+/// @param {key} $direction - Determines what direction the triangle will point -> up, down, left, right
+/// @param {value} $size [8px] - Determines how large you would like the triangle
+/// @param {value} $color - Color of the triangle
+/// @outputs Triangle properties
+
+@mixin triangle($direction, $size: 8px, $color: #222222) {
+  @if $direction == help {
+    @include INFO('Order: Direction, Size: 8px, Color: #222222. \A Direction Keys: up, down, left, right \A ');
+  }
+
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  content: '';
+
+  @if ($direction == 'up') {
+    border: {
+      top: 0;
+      right: $size solid transparent;
+      bottom: $size solid $color;
+      left: $size solid transparent;
+    }
+  } @else if ($direction == 'down') {
+    border:  {
+      top: $size solid $color;
+      right: $size solid transparent;
+      bottom: 0;
+      left: $size solid transparent;
+    }
+  } @else if ($direction == 'left') {
+    border:  {
+      top: $size solid transparent;
+      right: $size solid $color;
+      bottom: $size solid transparent;
+      left: 0;
+    }
+  } @else if ($direction == 'right') {
+    border:  {
+      top: $size solid transparent;
+      right: 0;
+      bottom: $size solid transparent;
+      left: $size solid $color;
+    }
+  }
+}
+
+/// @name Tooltips
+/// Tooltips that takes what data-tooltip attr text on element and creates a tooltip, Different options are avalible
+/// @param {key} $direction [tr] - Determines direction of tooltip. Direction options: tr -> top right, tl -> top left, br -> bottom right, bl -> bottom left.
+/// @param {key} $bg-color [color(greyscale, black)] - Determines background color of the tooltip
+/// @param {boolean} $title [false] - Set to true if you would like the title styles exported
+/// @outputs tooltip properties
+
+@mixin tooltip($direction: tr, $bg-color: color(greyscale, black), $title: false) {
+
+  @if $direction == help {
+    @include INFO('Order: direction, bg-color, title: true or false. \A Direction options: tr -> top right, tl -> top left, br -> bottom right, bl -> bottom left. \A ');
+  }
+
+  position: relative;
+  // configuration variables
+  // = height of triangle, width is 2x
+
+  $triangle-size: 6px;
+  $tooltip-min-width: 130px;
+  $tooltip-max-width: 250px;
+  $fade: 300ms;
+
+  &::before,
+  &::after {
+    z-index: 98;
+    pointer-events: none;
+    opacity: 0;
+
+    @include transition(opacity $fade, visibility 0ms linear $fade);
+  }
+
+  &::before {
+    position: absolute;
+    width: 100%;
+    min-width: $tooltip-min-width;
+    max-width: $tooltip-max-width;
+    padding: 10px 15px;
+    // tooltip body
+    content: attr(data-tooltip);
+    text-align: left;
+    white-space: normal;
+    border-radius: 3px;
+    background-color: $bg-color;
+    font-weight: normal;
+    line-height: 18px;
+
+    @include box-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+    @include font-size(13px);
+
+    // dynamically determine light or dark color based on $bg-color
+    @if lightness($bg-color) < 50% {
+      color: color(greyscale, white);
+    } @else {
+      color: color(greyscale, black);
+    }
+  }
+  // tooltip carrot
+  &::after {
+    content: '';
+  }
+
+  // apply positioning to top and bottom values
+  @if $direction == 'tl' or $direction == 'tr' {
+    &::before {
+      top: -($triangle-size + 3px);
+      // override with auto in case this tooltip is overriding a previous instance in another direction
+      bottom: auto;
+
+      @include transform(translateY(-100%));
+    }
+
+    &::after {
+      top: -($triangle-size + 3px);
+      bottom: auto;
+
+      @include triangle(down, $triangle-size, $bg-color);
+    }
+  }	@else if $direction == 'br' or $direction == 'bl' {
+    &::before {
+      top: auto;
+      bottom: -($triangle-size + 3px);
+
+      @include transform(translateY(100%));
+    }
+
+    &::after {
+      top: auto;
+      bottom: -($triangle-size + 3px);
+
+      @include triangle(up, $triangle-size, $bg-color);
+    }
+  }
+
+  // apply positioning to left and right values
+  @if $direction == 'tr' or $direction == 'br' {
+    &::before,
+    &::after {
+      right: auto;
+      left: 50%;
+      margin-left: -$triangle-size;
+    }
+
+    &::before {
+      margin-left: -$triangle-size * 3;
+    }
+  }	@else if $direction == 'tl' or $direction == 'bl' {
+    &::before,
+    &::after {
+      right: 50%;
+      left: auto;
+      margin-right: -$triangle-size;
+    }
+
+    &::before {
+      margin-right: -$triangle-size * 3;
+    }
+  }	@else {
+    @warn 'direction not valid in tooltip mixin';
+  }
+
+  &:hover {
+    &::before,
+    &::after {
+      pointer-events: all;
+      opacity: 1;
+
+      @include transition-delay(0s);
+    }
+  }
+}
+
+
+@include run-debug-end((framework, util, class-creators), '✪ Creator:Tooltips');

@@ -1,0 +1,191 @@
+//  Default Paragraph Styles
+// ==========================================================================
+@include run-debug-start((framework, infra, typography), ■ Paragraph, get('typography, fonts'));
+p {
+  -ms-word-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word; //non-standart css for webkit
+  // cleaning up the ragged lines and breaks
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+  font:  {
+    family: font-family(primary);
+  }
+  // sets a minimum number of characters before and after the break
+  -webkit-hyphenate-before: 2;
+  -webkit-hyphenate-after: 3;
+  hyphenate-lines: 3;
+  text-rendering: auto;
+}
+
+dfn,
+cite,
+em,
+i {
+  font-style: italic;
+}
+
+blockquote {
+  margin-left: 0;
+  padding: 1px 30px;
+  border-left: 5px solid color(greyscale, grey); // sass-lint:disable-line no-color-keywords
+}
+
+address {
+  margin: 0 0 1.5em;
+}
+
+pre {
+  overflow: auto;
+  max-width: 100%;
+  margin-bottom: 1.6em;
+  padding: 1.6em;
+  background: color(greyscale, light-grey);
+  font-family: 'Courier 10 Pitch', Courier, monospace;
+
+  @include font-size(15px);
+}
+
+code,
+kbd,
+tt,
+var {
+  font:  {
+    size: 15px;
+    size: 0.9375rem; // sass-lint:disable-line no-duplicate-properties
+    family: Monaco, Consolas, 'Andale Mono', 'DejaVu Sans Mono', monospace;
+  }
+}
+
+abbr,
+acronym {
+  cursor: help;
+  border-bottom: 1px dotted color(brand, primary);
+}
+
+mark,
+ins {
+  text-decoration: none;
+  color: color(greyscale, white); // sass-lint:disable-line no-color-keywords
+  background: color(brand, default);
+}
+
+big {
+  font-size: 125%;
+}
+
+blockquote,
+q {
+  quotes: '' '';
+
+  &::before,
+  &::after {
+    content: '';
+  }
+}
+
+hr {
+  height: 1px;
+  margin-bottom: 1.5em;
+  border: 0;
+  background-color: $hr-background;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin: 0 1.5em 1.5em;
+}
+
+// Text Transform
+// ==================================
+
+.text-upper {
+  text-transform: uppercase;
+}
+
+.text-lower {
+  text-transform: lowercase;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+// Text Alignments
+// ==================================
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+// Text Weights
+// =================================
+
+.text-bold,
+.weight-700 {
+  font-weight: 700;
+}
+
+.text-semi,
+.weight-600 {
+  font-weight: 600;
+}
+
+.text-regular,
+.weight-400 {
+  font-weight: 400;
+}
+
+.text-light,
+.weight-300 {
+  font-weight: 300;
+}
+
+// Font Sizes & Line Heights
+// =================================
+
+.text-size-17 {
+  @include font-size(17px);
+}
+
+.text-line-height-17 {
+  line-height: 17px;
+}
+
+$max: 56;
+$min: 4;
+$steps: round($max/$min);
+$step: $min;
+
+@for $i from $step through $steps {
+  $size: $step*1px;
+
+  .text-size-#{$step} {
+    @include font-size($size);
+  }
+
+  .text-line-height-#{$step} {
+    line-height: $size;
+  }
+
+  $step: $step + $min;
+  $i: $i + 1;
+}
+
+@include run-debug-end((framework, infra, typography), ■ Paragraph);

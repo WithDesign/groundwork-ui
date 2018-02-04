@@ -1,0 +1,40 @@
+// Gradient Variables
+//==========================================================================
+
+$gradient-type: (
+  linear: 'linear-gradient',
+  radial: 'radial-gradient',
+  repeating-linear: 'repeating-linear-gradient',
+  repeating-radial: 'repeating-radial-gradient'
+) !global;
+
+$preset-stops: (
+  1: 'circle cover, #3c3b52 0%, #252233 80%',
+  2: '#8b9da9, #fff6e4',
+  3: 'ellipse cover, rgba(105,155,200,1) 0%, rgba(181,197,216,1) 57%'
+) !default;
+
+$preset-direction: (
+  t-left: 'to left',
+  t-right: 'to right',
+  t-top: 'to top',
+  t-bottom: 'to bottom'
+) !default;
+
+$preset-1: radial, top, 1 !default;
+$preset-2: linear, top, 2 !default;
+$preset-3: radial, top left, 3 !default;
+
+
+$full-preset: (
+  1: $preset-1,
+  2: $preset-2,
+  3: $preset-3,
+) !default;
+
+$global-presets: (
+  gradient-type: $gradient-type,
+  preset-stops: $preset-stops,
+  preset-direction: $preset-direction,
+  full-preset: $full-preset
+) !default;

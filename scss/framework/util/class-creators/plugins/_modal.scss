@@ -1,0 +1,226 @@
+////
+/// Class Creators
+/// @group class-creator
+////
+
+@include run-debug-start((framework, util, class-creators), '✪ Creator:Modal');
+
+/// @name Modal
+/// Create basic styling of the modal
+/// @param {value} $width [350px] - Width of modal
+/// @param {value} $height [175px] - Height of modal
+/// @param {value} $padding [padding] - Padding of inner modal
+/// @param {value} $text-color [color(greyscale, black)] - Text color
+/// @param {value} $background-color [color(greyscale, white)] - Background color
+/// @param {value} $border [0] - Border
+/// @param {value} $border-radius [0] - Border Radius
+/// @param {boolean} $close-btn [false] - set to true if you would like a close btn style to be compiled
+/// @param {boolean} $selector [false] - set to true to add the selector `&`
+/// @outputs modal classes and properties
+/// @example
+///     @include modal((
+///       close-btn: true,
+///       height: auto
+///    )...);
+
+@mixin modal($width: 350px, $height: 175px, $padding: 10px 15px, $text-color: color(greyscale, black), $background-color: color(greyscale, white), $border: 0, $border-radius: 0, $close-btn: false, $selector: false, $active: plugin-active(modal)) {
+  $container: ();
+  // Helper for listing what available styles options
+  @if $width == help {
+    @include INFO('Available style options: width, height, padding, text-color, background-color, border, border-radius, close-btn: true or false');
+  }
+
+  @if $active == false {
+    @error 'Please set $modal to true to use this mixin';
+  }
+  // Icons that create the close button
+  $svg: svg-inline('<svg version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve"><g><circle fill="none" stroke="#{$text-color}" stroke-width="6" stroke-miterlimit="10" cx="50" cy="50" r="47"/><line fill="none" stroke="#{$text-color}" stroke-width="6" stroke-miterlimit="10" x1="71.214" y1="71.213" x2="28.787" y2="28.787"/><line fill="none" stroke="#{$text-color}" stroke-width="6" stroke-miterlimit="10" x1="28.787" y1="71.213" x2="71.214" y2="28.787"/></g></svg>');
+  $svg-hover: svg-inline('<svg version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve"><g><circle fill="none" stroke="#{lighten($text-color, 20%)}" stroke-width="6" stroke-miterlimit="10" cx="50" cy="50" r="47"/><line fill="none" stroke="#{lighten($text-color, 20%)}" stroke-width="6" stroke-miterlimit="10" x1="71.214" y1="71.213" x2="28.787" y2="28.787"/><line fill="none" stroke="#{lighten($text-color, 20%)}" stroke-width="6" stroke-miterlimit="10" x1="28.787" y1="71.213" x2="71.214" y2="28.787"/></g></svg>');
+
+  @if $selector == true {
+    $container: '&.modal-container';
+  } @else {
+    $container: '.modal-container';
+  }
+
+  #{unquote($container)} {
+    .modal {
+      top: 15px;
+      overflow: scroll;
+      max-height: 500px;
+      padding: $padding;
+      border: $border {
+        radius: $border-radius;
+      }
+      background-color: $background-color;
+
+
+      @include shadow(4, light);
+      @include breakpoint(sm) {
+        width: 100%;
+        max-width: $width;
+        min-height: $height;
+
+        @include calc(left, 50%, '50% - #{$width / 2}');
+        @if $height == auto-top {
+          top: 15px;
+          min-height: 250px;
+        } @else if $height == auto {
+          // TODO:: Come back to this for better solution, Its too awkward
+          // 150px gives it a min hieght just in case there is very little content
+          min-height: 150px;
+          @include calc(top, 50%, '50% - 150px');
+        } @else {
+          @include calc(top, 50%, '50% - #{$height / 2}');
+        }
+      }
+
+      .modal-close-btn {
+        @if $close-btn == true {
+          display: block;
+          visibility: visible;
+          background-image: url('#{$svg}');
+
+          @include transition(all ease 0.3s);
+
+          &:hover {
+            background-image: url('#{$svg-hover}');
+          }
+        } @else {
+          display: none;
+          visibility: hidden;
+        }
+      }
+
+      .modal-content {
+        color: $text-color;
+      }
+    }
+  }
+}
+
+// Base Styles for modal
+@if plugin-active(modal) == true {
+  @include run-debug-start((framework, util, class-creators), '✪ Creator:Base Modal Classes');
+
+  .modal-fade-out {
+    @include animation(modal-fade-out 1s forwards);
+  }
+
+  .modal-container {
+    position: absolute;
+    z-index: 9999999;
+    top: 0;
+    display: none;
+    visibility: hidden;
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 0;
+    background-color: rgba(color(greyscale, black), 0.7);
+
+    @include transition(all 0.5s ease);
+
+    &.modal-active {
+      display: block;
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal {
+      position: fixed;
+      z-index: 1;
+      box-sizing: border-box;
+
+      @include transition(all 0.5s ease);
+      @include animation(modal-fade-in 1s forwards);
+
+      @include breakpoint(xs) {
+        position: absolute;
+        height: auto;
+        margin: auto 15px;
+
+        @include calc(max-width, 95%, '100% - 30px');
+      }
+
+      .modal-close-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        background-size: contain;
+      }
+
+      .modal-content {
+        @extend .text-center;
+        @include font-size(16px);
+
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          margin-top: 0;
+          margin-bottom: 10px;
+          line-height: 1.125;
+        }
+
+        .btn {
+          box-sizing: border-box;
+          width: 100%;
+          margin: 0;
+        }
+
+        .modal-button-wrapper {
+          padding-top: 15px;
+
+          @extend .row;
+          @extend .no-mar;
+          .modal-button {
+            min-width: 100%;
+
+            @extend .no-pad;
+            @extend .col-xs;
+
+            @include breakpoint(sm) {
+              min-width: 50%;
+            }
+
+            @include child(unique) {
+              width: 100%;
+            }
+          }
+
+        }
+      }
+    }
+  }
+
+  @include keyframes(modal-fade-in) {
+    0% {
+      opacity: 0;
+      @include transform(scale(0.7));
+    }
+
+    100% {
+      opacity: 1;
+      @include transform(scale(1));
+    }
+  }
+
+  @include keyframes(modal-fade-out) {
+    0% {
+      opacity: 1;
+      @include transform(scale(1));
+    }
+
+    100% {
+      opacity: 0;
+      @include transform(scale(0.7));
+    }
+  }
+  @include run-debug-end((framework, util, class-creators), '✪ Creator:Base Modal Classes');
+}
+
+@include run-debug-start((framework, util, class-creators), '✪ Creator:Modal');

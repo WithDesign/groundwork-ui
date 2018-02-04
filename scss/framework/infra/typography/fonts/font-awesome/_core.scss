@@ -1,0 +1,31 @@
+// Base Class Definition
+// -------------------------
+
+$fa-spinning-animation: font-plugin(font-awesome, fa-spinning-animation) !default;
+$fa-bordered-pulled: font-plugin(font-awesome, fa-bordered-pulled) !default;
+$fa-stacked-icons: font-plugin(font-awesome, fa-stacked-icons) !default;
+$fa-icon-size: font-plugin(font-awesome, fa-icon-size) !default;
+$fa-list-icons: font-plugin(font-awesome, fa-list-icons) !default;
+$fa-rotate-flipped-icons: font-plugin(font-awesome, fa-rotate-flipped-icons) !default;
+$fa-screen-readers: font-plugin(font-awesome, fa-screen-readers) !default;
+$fa-fixed-width-icons: font-plugin(font-awesome, fa-fixed-width-icons) !default;
+$fa-font-size-base: font-plugin(font-awesome, fa-base-font-size) !default;
+$fa-line-height-base: font-plugin(font-awesome, fa-line-height-base) !default;
+$fa-css-prefix: font-plugin(font-awesome, fa-css-prefix) !default;
+$fa-border-color: font-plugin(font-awesome, fa-border-color) !default;
+$fa-inverse: font-plugin(font-awesome, fa-inverse) !default;
+$fa-li-width: font-plugin(font-awesome, fa-li-width) !default;
+
+@if font-plugin(font-awesome, active) == true {
+  .#{$fa-css-prefix} {
+    display: inline-block;
+    font-family: font-family(awesome);
+    font-size: #{$fa-font-size-base};
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: auto; // optimizelegibility throws things off #1094
+    line-height: #{$fa-line-height-base};
+  }
+
+}

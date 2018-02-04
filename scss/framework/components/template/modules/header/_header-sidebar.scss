@@ -1,0 +1,206 @@
+// sass-lint:disable no-qualifying-elements force-element-nesting force-pseudo-nesting
+
+//  Sidebar Navigation
+// ==========================================================================
+
+@if template-active(header, sidebar-header) == true {
+  header.sidebar-head {
+    position: relative;
+    z-index: 1000;
+
+    .nav-wrapper {
+      width: 100%;
+      background-color: color(greyscale, light-grey);
+
+      @include shadow(2);
+
+      .text {
+        position: absolute;
+        top: 29%;
+        right: 60px;
+        margin: 0;
+        padding: 0;
+
+        @include font-size(18px);
+      }
+    }
+
+    .nav-style {
+      position: relative;
+
+      @extend .no-padding;
+      @extend .container-fluid;
+    }
+
+    .header-extra {
+      position: absolute;
+      top: -15%;
+      right: 75px;
+    }
+
+    #logo {
+      position: absolute;
+      z-index: 10;
+      display: block;
+      float: left;
+      margin: 5px 10px 10px;
+
+      @include calc(width, 90%, '100% - 70px');
+
+      img {
+        max-width: 45px;
+      }
+    }
+
+    .navbar {
+      margin: 0;
+      padding: 0;
+
+      .menu {
+        position: absolute;
+        top: -1000px;
+        right: auto;
+        float: right;
+        width: 100%;
+        margin: 35px 0 0;
+        padding: 0;
+        list-style: none;
+        background-color: color(greyscale, white);
+
+        @include transition-timing-function(cubic-bezier(0, 1, 0.5, 1));
+        @include transition-delay(0.5s);
+        @include transition-property(all);
+        @include breakpoint(sm) {
+          position: absolute;
+          top: 50px;
+          display: none;
+          width: 250px;
+          margin-top: 35px;
+          background-color: color(greyscale, white);
+
+          @include calc(height, 96vh, '100vh - 85px');
+        }
+        @include shadow(2);
+
+        li {
+          display: block;
+          float: none;
+          margin: 15px 0;
+
+          @include breakpoint(sm) {
+            display: block;
+            float: none;
+            margin: 15px 0;
+          }
+        }
+      }
+
+      // Link Styles
+      a,
+      span {
+        margin: 5px;
+        padding: 15px 10px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        letter-spacing: 5px;
+        color: color(greyscale, black);
+        font-family: $font-heading;
+
+        @include font-size(21px);
+
+        &:hover {
+          color: color(brand, secondary);
+          background-color: color(greyscale, white);
+        }
+      }
+
+      // Handles position of nav display on mobile
+      #drop:checked +ul {
+        top: 50px;
+        right: auto;
+
+        @include breakpoint(sm) {
+          top: 50px;
+          right: 0;
+          display: block;
+        }
+      }
+    }
+
+    // Styles/Animates Toggle
+    #drop {
+      display: none;
+    }
+
+    .nav-toggle {
+      position: relative;
+      z-index: 10;
+      display: block;
+      float: right;
+      width: 35px;
+      height: 35px;
+      margin: 15px;
+      padding: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      color: color(greyscale, white);
+      border-left: 2px solid color(greyscale, grey);
+
+      @include font-size(17px);
+
+      .pill {
+        top: 50%;
+
+        @include transform(translateY(-50%));
+      }
+
+      .pill,
+      .pill:before,
+      .pill:after {
+        position: absolute;
+        display: block;
+        width: 35px;
+        height: 5px;
+        margin: 0;
+        padding: 0;
+        content: '';
+        cursor: pointer;
+        border-radius: 1px;
+        background: color(brand, primary);
+
+        @include transition(all 500ms ease-in-out);
+
+        &:hover {
+          background: color(greyscale, grey) !important;
+        }
+      }
+
+      .pill:before {
+        top: -10px;
+      }
+
+      .pill:after {
+        bottom: -10px;
+      }
+    }
+
+    .nav-toggle.active {
+      .pill {
+        background-color: transparent;
+
+        &:before {
+          top: 0;
+
+          @include transform(rotate(45deg));
+        }
+
+        &:after {
+          top: 0;
+
+          @include transform(rotate(-45deg));
+        }
+      }
+    }
+  }
+}

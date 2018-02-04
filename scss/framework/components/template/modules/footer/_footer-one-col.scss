@@ -1,0 +1,20 @@
+
+// One Column Footer
+// ==========================================================================
+
+@if template-active(footer, full) == true {
+  .one-column {
+    .sec-1 {
+      @include flex-column(sm);
+      @include column-base();
+    }
+
+    .sec-2 {
+      display: none;
+    }
+
+    .sec-3 {
+      display: none;
+    }
+  }
+}
