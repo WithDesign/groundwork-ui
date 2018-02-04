@@ -24,7 +24,7 @@ $user-defined-settings: (
   colors: (
     brand: (
       primary: #fff,
-      ),
     ),
-  );
+  ),
+);
 ```
