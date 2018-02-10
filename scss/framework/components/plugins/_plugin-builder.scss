@@ -38,13 +38,13 @@
 // Ratings
 @include run-debug-start((framework, components, plugins), ❖ Ratings, get('plugins, ratings'));
 @if plugin-active(ratings) == true {
-  $max-rating: get('plugins, ratings, max-rating');
-  $count: 0.5;
-  @while $count <= $max-rating {
-    .rating-#{find-replace('#{$count}', '.', '-')} {
-      @include rating('#{$count}');
-    }
-    $count: $count + 0.5;
-  }
+  // $max-rating: get('plugins, ratings, max-rating');
+  // $count: 0.5;
+  // @while $count <= $max-rating {
+  //   .rating-#{find-replace('#{$count}', '.', '-')} {
+  //     @include rating('#{$count}');
+  //   }
+  //   $count: $count + 0.5;
+  // }
 }
 @include run-debug-end((framework, components, plugins), ❖ Ratings);
