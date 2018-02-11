@@ -10,41 +10,41 @@
 $colors: (
   colors: (
     brand: (
-      primary: #000,
-      secondary: #000,
-      support: #000,
-      default: #000,
-      success:  #000,
-      warning: #000,
-      info: #000,
-      danger: #000
-    ),
-    cta: (
-      cta-1: #000,
-      cta-2: #000,
-      cta-3: #000
+      primary: #f58220,
+      secondary: #0085a9,
+      extra: #22292c,
+      support: #0275d8,
+      default: #5bc0de,
+      success: #2ecb5b,
+      warning: #f5e820,
+      info: #0085a9,
+      danger: #f53920
     ),
     greyscale: (
-      'white': #000,
-      light-grey: #000,
-      'grey': #000,
-      dark-grey: #000,
-      'black': #000
+      grey-0: darken(#727b80, 50%),
+      grey-10: darken(#727b80, 40%), // brand-extra
+      grey-20: darken(#727b80, 30%),
+      grey-30: darken(#727b80, 20%), // dark-grey
+      grey-40: darken(#727b80, 10%),
+      grey-50: #727b80, // grey
+      grey-60: lighten(#727b80, 10%),
+      grey-70: lighten(#727b80, 20%),
+      grey-80: lighten(#727b80, 30%),
+      grey-90: lighten(#727b80, 40%), // light-grey
+      grey-100: lighten(#727b80, 50%),
+      black: #22292c,
+      dark-grey: darken(#727b80, 20%),
+      grey: #727b80,
+      light-grey: lighten(#727b80, 40%)
     ),
     link: (
-      link: #000,
-      link-secondary: #000,
+      link: #0085a9,
+      link-secondary: darken(#0085a9, 15%),
     ),
-    social: (
-      facebook: #3b5998,
-      twitter: #55acee,
-      google: #dd4b39,
-      youtube: #b00,
-      pinterest: #cb2027,
-      vimeo: #aad450,
-      tumblr: #32506d,
-      rss: #f60,
-      instagram: #125688
-    ),
-  )
+    extras: (
+      blue-grey: #727b80,
+      dark-blue-grey: #333d42,
+      body-bg-color: lighten(#727b80, 45%),
+    )
+  ),
 );
