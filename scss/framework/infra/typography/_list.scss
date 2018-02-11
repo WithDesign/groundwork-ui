@@ -62,7 +62,7 @@ li > ol {
     margin-bottom: -1px;
     padding: 15px 20px;
     border: 1px solid darken(color(greyscale, light-grey), 10%);
-    background-color: color(greyscale, white); // sass-lint:disable-line no-color-keywords
+    background-color: color(greyscale, 'white'); // sass-lint:disable-line no-color-keywords
   }
 }
 @include run-debug-end((framework, infra, typography), ■ Lists);

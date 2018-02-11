@@ -17,7 +17,7 @@
 /// @outputs Styles to create a range slider in css
 /// @example
 ///    .range-slider {
-///       @include range-slider(100%, 0, color(greyscale, grey), color(brand, primary), none, 15px);
+///       @include range-slider(100%, 0, color(greyscale, 'grey'), color(brand, primary), none, 15px);
 ///     }
 
 
@@ -94,7 +94,7 @@
     z-index: -1;
     border: 0;
     border-radius: 0;
-    background-color: color(greyscale, black); // sass-lint:disable-line no-color-keywords
+    background-color: color(greyscale, 'black'); // sass-lint:disable-line no-color-keywords
   }
 
   input[type='range']:last-of-type::-moz-range-track {

@@ -33,7 +33,7 @@
       span {
         position: absolute;
         display: inline;
-        color: color(greyscale, black);
+        color: color(greyscale, 'black');
         border: 1px solid darken(color(greyscale, light-grey), 5%);
         background: color(greyscale, light-grey);
       }

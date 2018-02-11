@@ -10,8 +10,8 @@
 /// @param {value} $width [350px] - Width of modal
 /// @param {value} $height [175px] - Height of modal
 /// @param {value} $padding [padding] - Padding of inner modal
-/// @param {value} $text-color [color(greyscale, black)] - Text color
-/// @param {value} $background-color [color(greyscale, white)] - Background color
+/// @param {value} $text-color [color(greyscale, 'black')] - Text color
+/// @param {value} $background-color [color(greyscale, 'white')] - Background color
 /// @param {value} $border [0] - Border
 /// @param {value} $border-radius [0] - Border Radius
 /// @param {boolean} $close-btn [false] - set to true if you would like a close btn style to be compiled
@@ -23,7 +23,7 @@
 ///       height: auto
 ///    )...);
 
-@mixin modal($width: 350px, $height: 175px, $padding: 10px 15px, $text-color: color(greyscale, black), $background-color: color(greyscale, white), $border: 0, $border-radius: 0, $close-btn: false, $selector: false, $active: plugin-active(modal)) {
+@mixin modal($width: 350px, $height: 175px, $padding: 10px 15px, $text-color: color(greyscale, 'black'), $background-color: color(greyscale, 'white'), $border: 0, $border-radius: 0, $close-btn: false, $selector: false, $active: plugin-active(modal)) {
   $container: ();
   // Helper for listing what available styles options
   @if $width == help {
@@ -116,7 +116,7 @@
     min-width: 100%;
     min-height: 100%;
     opacity: 0;
-    background-color: rgba(color(greyscale, black), 0.7);
+    background-color: rgba(color(greyscale, 'black'), 0.7);
 
     @include transition(all 0.5s ease);
 

@@ -27,7 +27,7 @@
       left: 35%;
       padding-right: 0.5em;
       text-decoration: inherit;
-      color: color(greyscale, white);
+      color: color(greyscale, 'white');
       font:  {
         weight: normal;
         style: normal;
@@ -83,7 +83,7 @@
     h2 {
       margin: 40px 0 25px;
       padding: 0 0 10px;
-      border-bottom: 1px solid color(greyscale, grey);
+      border-bottom: 1px solid color(greyscale, 'grey');
     }
 
     label,
@@ -96,7 +96,7 @@
     label,
     a {
       &:hover {
-        color: color(greyscale, black) !important;
+        color: color(greyscale, 'black') !important;
       }
     }
 
@@ -139,7 +139,7 @@
       margin: 0;
       padding: 1%;
       border-radius: 5px;
-      background: color(greyscale, white);
+      background: color(greyscale, 'white');
 
       @include shadow(1);
 
@@ -186,10 +186,10 @@
         width: 10px;
         height: 10px;
         border-radius: 5px;
-        background: color(greyscale, grey);
+        background: color(greyscale, 'grey');
 
         &:hover {
-          background: color(greyscale, grey);
+          background: color(greyscale, 'grey');
         }
       }
     }
@@ -288,7 +288,7 @@
       text-align: left;
       opacity: 0;
       color: color(greyscale, dark-grey);
-      background-color: color(greyscale, white);
+      background-color: color(greyscale, 'white');
       line-height: 20px;
 
       @include shadow(2);

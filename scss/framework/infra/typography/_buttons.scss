@@ -15,7 +15,7 @@
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
-    color: color(greyscale, white); // sass-lint:disable-line no-color-keywords
+    color: color(greyscale, 'white'); // sass-lint:disable-line no-color-keywords
     border: 0 {
       radius: 0;
     }

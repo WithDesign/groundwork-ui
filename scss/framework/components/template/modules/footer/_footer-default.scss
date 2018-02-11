@@ -7,7 +7,7 @@
     z-index: 100;
     padding-top: 30px;
     text-align: center;
-    color: color(greyscale, white);
+    color: color(greyscale, 'white');
     background-color: color(greyscale, dark-grey);
 
     @include breakpoint(sm) {

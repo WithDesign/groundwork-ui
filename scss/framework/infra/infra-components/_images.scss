@@ -17,9 +17,9 @@
   max-width: 100%;
   height: auto;
   padding: 4px;
-  border: 1px solid lighten(color(greyscale, grey), 5%);
+  border: 1px solid lighten(color(greyscale, 'grey'), 5%);
   border-radius: 4px;
-  background-color: color(greyscale, white);
+  background-color: color(greyscale, 'white');
   line-height: 1.42857143;
 
   @include transition(all 0.2s ease-in-out);

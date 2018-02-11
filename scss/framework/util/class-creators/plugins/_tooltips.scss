@@ -58,11 +58,11 @@
 /// @name Tooltips
 /// Tooltips that takes what data-tooltip attr text on element and creates a tooltip, Different options are avalible
 /// @param {key} $direction [tr] - Determines direction of tooltip. Direction options: tr -> top right, tl -> top left, br -> bottom right, bl -> bottom left.
-/// @param {key} $bg-color [color(greyscale, black)] - Determines background color of the tooltip
+/// @param {key} $bg-color [color(greyscale, 'black')] - Determines background color of the tooltip
 /// @param {boolean} $title [false] - Set to true if you would like the title styles exported
 /// @outputs tooltip properties
 
-@mixin tooltip($direction: tr, $bg-color: color(greyscale, black), $title: false) {
+@mixin tooltip($direction: tr, $bg-color: color(greyscale, 'black'), $title: false) {
 
   @if $direction == help {
     @include INFO('Order: direction, bg-color, title: true or false. \A Direction options: tr -> top right, tl -> top left, br -> bottom right, bl -> bottom left. \A ');
@@ -106,9 +106,9 @@
 
     // dynamically determine light or dark color based on $bg-color
     @if lightness($bg-color) < 50% {
-      color: color(greyscale, white);
+      color: color(greyscale, 'white');
     } @else {
-      color: color(greyscale, black);
+      color: color(greyscale, 'black');
     }
   }
   // tooltip carrot

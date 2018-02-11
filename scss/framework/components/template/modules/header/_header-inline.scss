@@ -57,7 +57,7 @@
         margin-top: 35px;
         padding: 0;
         list-style: none;
-        background-color: color(greyscale, white);
+        background-color: color(greyscale, 'white');
 
         @include transition-timing-function(cubic-bezier(0, 1, 0.5, 1));
         @include transition-delay(0.5s);
@@ -94,14 +94,14 @@
         text-align: center;
         text-decoration: none;
         letter-spacing: 5px;
-        color: color(greyscale, black);
+        color: color(greyscale, 'black');
         font-family: $font-heading;
 
         @include font-size(21px);
 
         &:hover {
           color: color(brand, secondary);
-          background-color: color(greyscale, white);
+          background-color: color(greyscale, 'white');
 
           @include breakpoint(sm) {
             background-color: transparent;
@@ -131,7 +131,7 @@
       padding: 10px;
       cursor: pointer;
       text-decoration: none;
-      color: color(greyscale, white);
+      color: color(greyscale, 'white');
       border: 0 {
         radius: 5px;
       }
@@ -164,12 +164,12 @@
         content: '';
         cursor: pointer;
         border-radius: 1px;
-        background: color(greyscale, white);
+        background: color(greyscale, 'white');
 
         @include transition(all 500ms ease-in-out);
 
         &:hover {
-          background: color(greyscale, white) !important;
+          background: color(greyscale, 'white') !important;
         }
       }
 

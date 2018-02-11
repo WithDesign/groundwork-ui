@@ -21,7 +21,7 @@
       -ms-user-select: none;
       user-select: none;
       -khtml-user-select: none;
-      -webkit-tap-highlight-color: rgba(color(greyscale, black), 0); // sass-lint:disable-line no-color-literals
+      -webkit-tap-highlight-color: rgba(color(greyscale, 'black'), 0); // sass-lint:disable-line no-color-literals
       -webkit-touch-callout: none;
     }
 
@@ -43,7 +43,7 @@
       margin: 20px 0;
       cursor: pointer;
       letter-spacing: 1px;
-      background-color: color(greyscale, white);
+      background-color: color(greyscale, 'white');
       font-weight: 300;
       line-height: 34px;
 
@@ -60,7 +60,7 @@
       padding: 15px 0;
       letter-spacing: 1px;
       opacity: 1;
-      color: color(greyscale, black);
+      color: color(greyscale, 'black');
       line-height: 26px;
 
       @extend .transition-acc;

@@ -7,7 +7,7 @@
 
 /// @name Infrastructure Background/Text Colors
 /// Creates basic color styles
-/// @param {list} $color-lists [($brand-colors, $cta-colors, color(greyscale, grey)-colors, $social-colors)] - A list of color maps.
+/// @param {list} $color-lists [($brand-colors, $cta-colors, color(greyscale, 'grey')-colors, $social-colors)] - A list of color maps.
 /// @outputs color classes
 
 @mixin infra-colors($color-lists: get('colors')) {

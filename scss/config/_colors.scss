@@ -32,10 +32,11 @@ $colors: (
       grey-80: lighten(#727b80, 30%),
       grey-90: lighten(#727b80, 40%), // light-grey
       grey-100: lighten(#727b80, 50%),
-      black: #22292c,
+      'black': #22292c,
       dark-grey: darken(#727b80, 20%),
-      grey: #727b80,
-      light-grey: lighten(#727b80, 40%)
+      'grey': #727b80,
+      light-grey: lighten(#727b80, 40%),
+      'white': #fff,
     ),
     link: (
       link: #0085a9,

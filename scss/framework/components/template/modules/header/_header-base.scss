@@ -78,7 +78,7 @@
         margin: 35px 0 0;
         padding: 0;
         list-style: none;
-        background-color: color(greyscale, white);
+        background-color: color(greyscale, 'white');
 
         @include transition-timing-function(cubic-bezier(0, 1, 0.5, 1));
         @include transition-delay(0.5s);
@@ -121,7 +121,7 @@
         padding: 15px 10px;
         cursor: pointer;
         letter-spacing: 5px;
-        color: color(greyscale, black);
+        color: color(greyscale, 'black');
         font-family: $font-heading;
 
         text:  {
@@ -130,12 +130,12 @@
         }
         @include font-size(21px);
         @include breakpoint(sm) {
-          color: color(greyscale, white);
+          color: color(greyscale, 'white');
         }
 
         &:hover {
           color: color(brand, secondary);
-          background-color: color(greyscale, white);
+          background-color: color(greyscale, 'white');
 
           @include breakpoint(sm) {
             background-color: transparent;

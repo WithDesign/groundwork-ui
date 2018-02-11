@@ -23,12 +23,12 @@
       width: calc(100% - 12px);
       height: 34px;
       padding: 6px 0;
-      color: darken(color(greyscale, grey), 35%);
-      border: 1px solid color(greyscale, grey) {
+      color: darken(color(greyscale, 'grey'), 35%);
+      border: 1px solid color(greyscale, 'grey') {
         radius: 4px;
       }
       background:  {
-        color: color(greyscale, white);
+        color: color(greyscale, 'white');
         image: none;
       }
       font-size: 14px;
@@ -48,15 +48,15 @@
 
   .form-control::-moz-placeholder {
     opacity: 1;
-    color: darken(color(greyscale, grey), 20%);
+    color: darken(color(greyscale, 'grey'), 20%);
   }
 
   .form-control:-ms-input-placeholder {
-    color: darken(color(greyscale, grey), 20%);
+    color: darken(color(greyscale, 'grey'), 20%);
   }
 
   .form-control::-webkit-input-placeholder {
-    color: darken(color(greyscale, grey), 20%);
+    color: darken(color(greyscale, 'grey'), 20%);
   }
 
   .form-control::-ms-expand {
@@ -120,7 +120,7 @@
       padding: 0 0.5em;
       text-align: left;
       pointer-events: none;
-      color: darken(color(greyscale, grey), 20%);
+      color: darken(color(greyscale, 'grey'), 20%);
       background-color: color(greyscale, light-grey);
       font-weight: bold;
 
@@ -136,8 +136,8 @@
         width: 100%;
         height: 42px;
         content: '';
-        border-top: 4px solid darken(color(greyscale, grey), 25%);
-        background: color(greyscale, white);
+        border-top: 4px solid darken(color(greyscale, 'grey'), 25%);
+        background: color(greyscale, 'white');
 
         @include transition-timing-function(cubic-bezier(0.7, 0, 0.3, 1));
         @include transition(transform 0.4s);
@@ -201,7 +201,7 @@
         padding-right: 0.5em;
         content: '\f078';
         text-decoration: inherit;
-        color: darken(color(greyscale, grey), 20%);
+        color: darken(color(greyscale, 'grey'), 20%);
         font:  {
           weight: normal;
           style: normal;
@@ -218,11 +218,11 @@
         height: 50px;
         margin: 36px auto 0;
         padding: 0 10px;
-        color: darken(color(greyscale, grey), 20%);
+        color: darken(color(greyscale, 'grey'), 20%);
         border:  {
-          top: 3px solid darken(color(greyscale, grey), 20%);
+          top: 3px solid darken(color(greyscale, 'grey'), 20%);
           right: 0 solid transparent;
-          bottom: 3px solid darken(color(greyscale, grey), 20%);
+          bottom: 3px solid darken(color(greyscale, 'grey'), 20%);
           left: 0 solid transparent;
         }
         border-radius: 0;
@@ -242,7 +242,7 @@
             bottom: 3px solid color(brand, success);
             left: 0 solid transparent;
           }
-          background: color(greyscale, white) {  // sass-lint:disable-line trailing-semicolon
+          background: color(greyscale, 'white') {  // sass-lint:disable-line trailing-semicolon
             color: lighten(color(brand, success), 30%);
           }
         }

@@ -68,7 +68,7 @@ $dots-padding: get('plugins, preloader, dots-padding') !default;
   .#{$selector-name}-wrapper {
     width: 100%;
     height: 100%;
-    background-color: rgba(color(greyscale, white), 0.8);
+    background-color: rgba(color(greyscale, 'white'), 0.8);
 
     @extend %loading-extend;
   }

@@ -58,7 +58,7 @@
 /// @example
 ///      @include shadow($type, $level, $shadow-style: null, $text: null, $text-color: null);
 ///      @include shadow(light, $shadow, inset);
-///      @include shadow(t-shadow, 1, inset, text, color(greyscale, white));
+///      @include shadow(t-shadow, 1, inset, text, color(greyscale, 'white'));
 /// @see $shadows-default
 
 @mixin shadow($level: 1, $type: dark, $shadow-style: null, $text: null, $text-color: null) {

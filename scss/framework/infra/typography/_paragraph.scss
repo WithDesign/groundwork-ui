@@ -29,7 +29,7 @@ i {
 blockquote {
   margin-left: 0;
   padding: 1px 30px;
-  border-left: 5px solid color(greyscale, grey); // sass-lint:disable-line no-color-keywords
+  border-left: 5px solid color(greyscale, 'grey'); // sass-lint:disable-line no-color-keywords
 }
 
 address {
@@ -67,7 +67,7 @@ acronym {
 mark,
 ins {
   text-decoration: none;
-  color: color(greyscale, white); // sass-lint:disable-line no-color-keywords
+  color: color(greyscale, 'white'); // sass-lint:disable-line no-color-keywords
   background: color(brand, default);
 }
 

@@ -34,7 +34,7 @@
 
     table {
       overflow-y: scroll;
-      background: color(greyscale, white); // sass-lint:disable-line no-color-keywords
+      background: color(greyscale, 'white'); // sass-lint:disable-line no-color-keywords
     }
   }
 
@@ -72,33 +72,33 @@
 
       tbody,
       tfoot {
-        border: 1px solid color(greyscale, grey); // sass-lint:disable-line no-color-keywords
+        border: 1px solid color(greyscale, 'grey'); // sass-lint:disable-line no-color-keywords
         @extend %striped-table-extend;
 
         tr,
         td,
         th {
-          border: 1px solid color(greyscale, grey); // sass-lint:disable-line no-color-keywords
+          border: 1px solid color(greyscale, 'grey'); // sass-lint:disable-line no-color-keywords
           @extend %striped-table-extend;
         }
       }
 
       tr {
         &:nth-child(odd) {
-          background-color: lighten(color(greyscale, grey), 10%); // sass-lint:disable-line no-color-keywords
+          background-color: lighten(color(greyscale, 'grey'), 10%); // sass-lint:disable-line no-color-keywords
         }
       }
 
       thead {
-        border: 1px solid darken(color(greyscale, grey), 15%); // sass-lint:disable-line no-color-keywords
-        border-bottom: 3px solid darken(color(greyscale, grey), 15%); // sass-lint:disable-line no-color-keywords
+        border: 1px solid darken(color(greyscale, 'grey'), 15%); // sass-lint:disable-line no-color-keywords
+        border-bottom: 3px solid darken(color(greyscale, 'grey'), 15%); // sass-lint:disable-line no-color-keywords
         @extend %striped-table-extend;
 
         tr,
         th {
           color: color(brand, primary);
-          border: 1px solid darken(color(greyscale, grey), 15%); // sass-lint:disable-line no-color-keywords
-          background-color: color(greyscale, grey); // sass-lint:disable-line no-color-keywords
+          border: 1px solid darken(color(greyscale, 'grey'), 15%); // sass-lint:disable-line no-color-keywords
+          background-color: color(greyscale, 'grey'); // sass-lint:disable-line no-color-keywords
           @extend %striped-table-extend;
         }
       }
